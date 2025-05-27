@@ -2,114 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @layer base {
   :root {
+    /* Light theme using the blue palette */
+    --background: 193 100% 97%; /* Very light blue #C1E8FF adapted */
+    --foreground: 2 87% 6%; /* Dark navy #021024 */
 
-    --background: 0 0% 100%;
+    --card: 0 0% 100%; /* Pure white for cards */
+    --card-foreground: 2 87% 6%; /* Dark navy #021024 */
 
-    --foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%; /* Pure white */
+    --popover-foreground: 2 87% 6%; /* Dark navy #021024 */
 
-    --card: 0 0% 100%;
+    --primary: 215 87% 17%; /* Dark navy #052659 */
+    --primary-foreground: 193 100% 97%; /* Light blue #C1E8FF */
 
-    --card-foreground: 222.2 84% 4.9%;
+    --secondary: 206 31% 69%; /* Medium-light blue #7DA0CA */
+    --secondary-foreground: 2 87% 6%; /* Dark navy #021024 */
 
-    --popover: 0 0% 100%;
+    --muted: 208 26% 84%; /* Light muted blue derived from palette */
+    --muted-foreground: 215 87% 17%; /* Dark navy #052659 */
 
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 208 38% 56%; /* Medium blue #548EB3 */
+    --accent-foreground: 0 0% 100%; /* White */
 
     --destructive: 0 84.2% 60.2%;
-
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
+    --border: 208 26% 84%; /* Light muted blue */
+    --input: 208 26% 84%; /* Light muted blue */
+    --ring: 215 87% 17%; /* Dark navy #052659 */
 
-    --input: 214.3 31.8% 91.4%;
-
-    --ring: 222.2 84% 4.9%;
-
-    --chart-1: 12 76% 61%;
-
-    --chart-2: 173 58% 39%;
-
-    --chart-3: 197 37% 24%;
-
-    --chart-4: 43 74% 66%;
-
-    --chart-5: 27 87% 67%;
+    --chart-1: 208 38% 56%; /* Medium blue #548EB3 */
+    --chart-2: 206 31% 69%; /* Medium-light blue #7DA0CA */
+    --chart-3: 215 87% 17%; /* Dark navy #052659 */
+    --chart-4: 2 87% 6%; /* Very dark navy #021024 */
+    --chart-5: 193 100% 87%; /* Lighter version of light blue */
 
     --radius: 0.5rem
   }
+  
   .dark {
+    /* Dark theme using the blue palette */
+    --background: 2 87% 6%; /* Very dark navy #021024 */
+    --foreground: 193 100% 97%; /* Light blue #C1E8FF */
 
-    --background: 222.2 84% 4.9%;
+    --card: 215 87% 17%; /* Dark navy #052659 */
+    --card-foreground: 193 100% 97%; /* Light blue #C1E8FF */
 
-    --foreground: 210 40% 98%;
+    --popover: 215 87% 17%; /* Dark navy #052659 */
+    --popover-foreground: 193 100% 97%; /* Light blue #C1E8FF */
 
-    --card: 222.2 84% 4.9%;
+    --primary: 193 100% 97%; /* Light blue #C1E8FF */
+    --primary-foreground: 2 87% 6%; /* Very dark navy #021024 */
 
-    --card-foreground: 210 40% 98%;
+    --secondary: 208 38% 56%; /* Medium blue #548EB3 */
+    --secondary-foreground: 193 100% 97%; /* Light blue #C1E8FF */
 
-    --popover: 222.2 84% 4.9%;
+    --muted: 215 50% 25%; /* Darker muted blue */
+    --muted-foreground: 206 31% 69%; /* Medium-light blue #7DA0CA */
 
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-
-    --accent-foreground: 210 40% 98%;
+    --accent: 206 31% 69%; /* Medium-light blue #7DA0CA */
+    --accent-foreground: 2 87% 6%; /* Very dark navy #021024 */
 
     --destructive: 0 62.8% 30.6%;
-
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
+    --border: 215 50% 25%; /* Darker muted blue */
+    --input: 215 50% 25%; /* Darker muted blue */
+    --ring: 206 31% 69%; /* Medium-light blue #7DA0CA */
 
-    --input: 217.2 32.6% 17.5%;
-
-    --ring: 212.7 26.8% 83.9%;
-
-    --chart-1: 220 70% 50%;
-
-    --chart-2: 160 60% 45%;
-
-    --chart-3: 30 80% 55%;
-
-    --chart-4: 280 65% 60%;
-
-    --chart-5: 340 75% 55%
+    --chart-1: 206 31% 69%; /* Medium-light blue #7DA0CA */
+    --chart-2: 208 38% 56%; /* Medium blue #548EB3 */
+    --chart-3: 193 100% 87%; /* Lighter version of light blue */
+    --chart-4: 193 100% 97%; /* Light blue #C1E8FF */
+    --chart-5: 215 87% 17%; /* Dark navy #052659 */
   }
 }
-
-
 
 @layer base {
   * {

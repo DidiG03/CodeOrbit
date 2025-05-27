@@ -49,7 +49,12 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+  			'deep-navy': '#021024',     // Darkest blue
+  			'dark-navy': '#052659',     // Dark blue
+  			'ocean-blue': '#548EB3',    // Medium blue
+  			'sky-blue': '#7DA0CA',      // Light blue
+  			'pale-blue': '#C1E8FF',     // Very light blue
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
