@@ -121,7 +121,7 @@ export function Services() {
       </div>
 
       <div className="container px-4 md:px-6 relative z-10">
-        <motion.div 
+        {/* <motion.div 
           className="flex justify-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -134,7 +134,7 @@ export function Services() {
             height={400} 
             className="object-contain rounded-lg"
           />
-        </motion.div>
+        </motion.div> */}
 
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -142,7 +142,7 @@ export function Services() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold mb-4 text-[#7DA0CA]">Our Services</h2>
+          <h2 className="text-4xl font-bold mb-4 text-white">Our Services</h2>
           <p className="text-xl text-[#C1E8FF] max-w-2xl mx-auto">
             Comprehensive technology solutions tailored to your business needs
           </p>
@@ -174,7 +174,7 @@ export function Services() {
                     {service.icon}
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-[#C1E8FF] mb-1">
+                    <h3 className="text-2xl font-semibold text-white mb-1">
                       {service.title}
                     </h3>
                     <p className="text-[#C1E8FF]/80 text-sm">

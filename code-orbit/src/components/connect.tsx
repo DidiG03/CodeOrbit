@@ -43,7 +43,7 @@ export function Connect() {
             viewport={{ once: true }}
             className="mb-12"
           >
-            <h2 className="text-5xl font-bold text-[#7DA0CA]">Book A Call With Us</h2>
+            <h2 className="text-5xl font-bold text-white">Book A Call With Us</h2>
             
             <p className="text-xl text-[#C1E8FF]">
               Feel free to reach out to us for further information!

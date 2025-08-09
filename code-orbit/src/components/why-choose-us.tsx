@@ -54,8 +54,8 @@ export function WhyChooseUs() {
 
       <div className="container px-4 md:px-6 relative z-10">
         <Parallax translateY={[-10, 10]} className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 text-[#C1E8FF]">Why Choose Us?</h2>
-          <p className="text-xl text-[#C1E8FF]/80 max-w-2xl mx-auto">
+          <h2 className="text-4xl font-bold mb-4 text-orange-300">Why Choose Us?</h2>
+          <p className="text-xl text-white max-w-2xl mx-auto">
             Your Trusted Partner in Technology
           </p>
         </Parallax>
@@ -75,8 +75,8 @@ export function WhyChooseUs() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-4xl font-bold text-[#548EB3]">{reason.number}</span>
-                      <h3 className="text-xl font-semibold text-[#C1E8FF] group-hover:text-[#7DA0CA] transition-colors">
+                      <span className="text-4xl font-bold text-orange-300 group-hover:text-[#7DA0CA] transition-colors">{reason.number}</span>
+                      <h3 className="text-xl font-semibold text-orange-300 group-hover:text-[#7DA0CA] transition-colors">
                         {reason.title}
                       </h3>
                     </div>

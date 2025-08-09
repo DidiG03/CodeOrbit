@@ -70,7 +70,7 @@ export function CoreValues() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold mb-4 text-[#7DA0CA]">Our Core Values</h2>
+          <h2 className="text-4xl font-bold mb-4 text-white">Our Core Values</h2>
         </motion.div>
 
         <motion.div
@@ -95,8 +95,8 @@ export function CoreValues() {
             >
               <Card className="flex flex-col h-full p-6 bg-[#548EB3]/20 border-[#7DA0CA]/30 rounded-xl">
                 <div className="text-4xl mb-4">{value.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-[#C1E8FF]">{value.title}</h3>
-                <p className="text-[#C1E8FF]/80 text-sm">{value.description}</p>
+                <h3 className="text-xl font-bold mb-2 text-white">{value.title}</h3>
+                <p className="text-white text-sm">{value.description}</p>
               </Card>
             </motion.div>
           ))}
