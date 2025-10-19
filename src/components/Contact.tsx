@@ -13,7 +13,7 @@ export default function Contact() {
     e.preventDefault();
     // TODO: Implement form submission logic
     console.log("Form submitted:", formData);
-    alert("Thank you for your message! We'll get back to you soon.");
+    alert("Thank you for your message! We&apos;ll get back to you soon.");
     setFormData({ name: "", email: "", message: "" });
   };
 
@@ -33,7 +33,7 @@ export default function Contact() {
               Get In Touch
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">
-              Have a project in mind? Let's discuss how we can help you succeed.
+              Have a project in mind? Let&apos;s discuss how we can help you succeed.
             </p>
           </div>
 
