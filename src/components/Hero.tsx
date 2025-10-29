@@ -150,7 +150,7 @@ export default function Hero() {
             <TextType
               as="p"
               text={["Pioneering intelligent solutions that redefine how businesses operate in the digital era."]}
-              className="text-2xl md:text-xl text-white font-medium tracking-wide block"
+              className="text-lg md:text-base text-white font-medium tracking-wide block"
               typingSpeed={30}
               pauseDuration={1500}
               showCursor={false}

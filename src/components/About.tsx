@@ -15,10 +15,10 @@ export default function About() {
             </div>
             
             {/* Blue Gradient Accent Bar */}
-            <div className="absolute left-0 top-8 w-2 h-32 bg-gradient-to-b from-[#6366F1] to-transparent"></div>
+            <div className="absolute left-0 top-8 w-2 h-24 md:h-32 bg-gradient-to-b from-[#6366F1] to-transparent"></div>
             
             {/* Main Headline */}
-            <h2 className="text-5xl md:text-7xl font-bold text-white leading-tight relative z-10 ml-8">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight relative z-10 ml-6 md:ml-10 lg:ml-12">
               Your Vision<br/>
               <span className="text-[#6366F1]">Our Expertise</span><br/>
               Your Success
@@ -26,9 +26,9 @@ export default function About() {
           </div>
 
           {/* Right Side - Image Cards */}
-          <div className="flex items-center justify-center gap-6">
+          <div className="flex items-center justify-center gap-4 md:gap-6 flex-wrap md:flex-nowrap">
             {/* First Card */}
-            <div className="relative rounded-lg overflow-hidden group w-56 h-56">
+            <div className="relative rounded-lg overflow-hidden group w-48 h-48 md:w-56 md:h-56">
               <img 
                 src="/images/frame2.jpg" 
                 alt="Tech Blog" 
@@ -41,7 +41,7 @@ export default function About() {
             </div>
 
             {/* Second Card */}
-            <div className="relative rounded-lg overflow-hidden group w-56 h-56">
+            <div className="relative rounded-lg overflow-hidden group w-48 h-48 md:w-56 md:h-56">
               <img 
                 src="/images/frame3.jpg" 
                 alt="Trends" 
@@ -63,7 +63,7 @@ export default function About() {
               src="/images/frame4.jpg" 
               alt="Our Team" 
               className="w-full h-full rounded-2xl object-cover"
-              style={{ minHeight: '600px' }}
+              style={{ minHeight: '400px' }}
             />
           </div>
 
@@ -79,22 +79,22 @@ export default function About() {
             </p>
 
             {/* Statistics */}
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4 md:gap-6">
               <div>
-                <div className="text-5xl font-bold text-white mb-2">XX+</div>
-                <div className="text-white/60">Completed Projects</div>
+                <div className="text-3xl md:text-5xl font-bold text-white mb-2">XX+</div>
+                <div className="text-sm md:text-base text-white/60">Completed Projects</div>
               </div>
               <div>
-                <div className="text-5xl font-bold text-white mb-2">XX</div>
-                <div className="text-white/60">Satisfied Customers</div>
+                <div className="text-3xl md:text-5xl font-bold text-white mb-2">XX</div>
+                <div className="text-sm md:text-base text-white/60">Satisfied Customers</div>
               </div>
               <div>
-                <div className="text-5xl font-bold text-white mb-2">XX+</div>
-                <div className="text-white/60">Years Of Mastery</div>
+                <div className="text-3xl md:text-5xl font-bold text-white mb-2">XX+</div>
+                <div className="text-sm md:text-base text-white/60">Years Of Mastery</div>
               </div>
               <div>
-                <div className="text-5xl font-bold text-white mb-2">XX+</div>
-                <div className="text-white/60">Worldwide Honors</div>
+                <div className="text-3xl md:text-5xl font-bold text-white mb-2">XX+</div>
+                <div className="text-sm md:text-base text-white/60">Worldwide Honors</div>
               </div>
             </div>
 
@@ -106,16 +106,16 @@ export default function About() {
                 <div className="w-12 h-12 rounded-full border-2 border-white/30 bg-gradient-to-br from-purple-500 to-[#6366F1]"></div>
                 <div className="w-12 h-12 rounded-full border-2 border-white/30 bg-gradient-to-br from-blue-500 to-cyan-500"></div>
               </div>
-              <button className="flex items-center gap-3 text-white text-lg font-medium hover:text-[#6366F1] transition-colors">
+              <button className="flex items-center gap-2 md:gap-3 text-white text-sm md:text-lg font-medium hover:text-[#6366F1] transition-colors">
                 <span>WATCH INTRO</span>
               </button>
               {/* Play Button */}
               <button 
-                className="w-14 h-14 rounded-full border-2 border-[#6366F1] flex items-center justify-center hover:bg-[#6366F1] transition-colors group"
+                className="w-10 h-10 md:w-14 md:h-14 rounded-full border-2 border-[#6366F1] flex items-center justify-center hover:bg-[#6366F1] transition-colors group"
                 aria-label="Watch intro video"
                 title="Watch intro video"
               >
-                <svg className="w-6 h-6 text-[#6366F1] group-hover:text-white transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 md:w-6 md:h-6 text-[#6366F1] group-hover:text-white transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z"/>
                 </svg>
               </button>
@@ -124,7 +124,7 @@ export default function About() {
         </div>
 
         {/* New Section - Timeline and Interactive Image */}
-        <div className="grid md:grid-cols-2 gap-12 mt-32">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 mt-16 md:mt-32">
           {/* Left Column - Story and Timeline */}
           <div className="space-y-8">
             {/* OUR STORY label */}
@@ -134,7 +134,7 @@ export default function About() {
             </div>
 
             {/* Main Headline */}
-            <h2 className="text-5xl md:text-6xl font-bold text-white leading-tight ml-8">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight ml-4 md:ml-8">
               Your Gateway To{' '}
               <span className="text-[#6366F1]">Online Excellence</span>{' '}
               Dream Big In Pixels.
@@ -171,7 +171,7 @@ export default function About() {
             </div>
 
             {/* Timeline */}
-            <div className="space-y-6 pt-12">
+            <div className="space-y-6 pt-12 pb-8 md:pb-12">
               {/* Timeline Line and Markers */}
               <div className="relative h-32">
                 {/* Horizontal Line */}
@@ -179,11 +179,11 @@ export default function About() {
                 
                 {/* Markers */}
                 <div className="flex justify-between h-full">
-                  <div className="flex flex-col items-center relative ml-4">
-                    <div className="absolute top-12 w-16 h-16 -translate-y-1/2">
+                  <div className="flex flex-col items-center relative ml-4 pb-20 md:pb-24">
+                    <div className="absolute top-8 md:top-12 w-16 h-16 -translate-y-1/2">
                         <img src="/images/frame5.jpg" alt="2000" className="w-16 h-16 rounded-full object-fill" />
                     </div>
-                    <div className="absolute top-32">
+                    <div className="absolute top-28 md:top-32">
                       <div className="text-white text-sm mb-1 ml-4">2019</div>
                       <div className="text-white/60 text-xs">Establishment & Foundation</div>
                     </div>
@@ -225,27 +225,34 @@ export default function About() {
                 src="/images/frame6.jpg" 
                 alt="Team Collaboration" 
                 className="w-full h-full rounded-2xl object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
-                style={{ minHeight: '700px' }}
+                style={{ minHeight: '400px' }}
               />
               
               {/* Interactive Button with Rotating Text */}
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-                <svg className="w-48 h-48 animate-spin-slow pointer-events-none">
+                <svg 
+                  className="w-32 h-32 md:w-48 md:h-48 pointer-events-none"
+                  viewBox="0 0 192 192"
+                  style={{ 
+                    animation: 'spin 20s linear infinite',
+                    transformOrigin: '96px 96px'
+                  }}
+                >
                   <defs>
-                    <path id="circle" d="M 96,96 m -86,0 a 86,86 0 1,1 172,0 a 86,86 0 1,1 -172,0" />
+                    <path id="circle" d="M 96,96 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
                   </defs>
-                  <text fontSize="12" fill="white" opacity="0.8">
+                  <text fontSize="11" fill="white" opacity="0.8">
                     <textPath href="#circle" startOffset="0%">
                       Get In Touch · Get In Touch · Get In Touch · 
                     </textPath>
                   </text>
                 </svg>
                 <button 
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-[#6366F1] rounded-full flex items-center justify-center hover:bg-[#4F46E5] transition-colors shadow-lg pointer-events-auto"
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-[#6366F1] rounded-full flex items-center justify-center hover:bg-[#4F46E5] transition-colors shadow-lg pointer-events-auto"
                   aria-label="Get in touch"
                   title="Get in touch"
                 >
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.5 12L8 6.5v11L17.5 12z" />
                   </svg>
                 </button>
