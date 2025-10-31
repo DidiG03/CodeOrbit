@@ -130,7 +130,7 @@
 
     --chart-5: 27 87% 67%;
 
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
 
@@ -180,7 +180,7 @@
 
     --chart-4: 280 65% 60%;
 
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
 
@@ -400,8 +400,7 @@
   }
   50% {
     transform: scale(2);
-    filter: blur(10px) brightness(150%)
-      drop-shadow(-36px 12px 12px hsl(var(--highlight-color-hue), 100%, 70%));
+    filter: blur(10px) brightness(150%) drop-shadow(-36px 12px 12px hsl(var(--highlight-color-hue), 100%, 70%));
   }
 }
 
@@ -579,9 +578,10 @@
 
 .btn:hover .btn-svg {
   fill: #fff;
-  filter: drop-shadow(0 0 3px hsl(var(--highlight-color-hue), 100%, 70%))
-    drop-shadow(0 -4px 6px #0009);
+  filter: drop-shadow(0 0 3px hsl(var(--highlight-color-hue), 100%, 70%)) drop-shadow(0 -4px 6px #0009);
   animation: none;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
