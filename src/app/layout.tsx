@@ -21,6 +21,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden">
       <body className="antialiased overflow-x-hidden">
+    <html lang="en">
+      <body className="antialiased">
         {children}
       </body>
     </html>
