@@ -1,13 +1,115 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export default function About() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const heading1Ref = useRef<HTMLHeadingElement>(null);
+  const heading2Ref = useRef<HTMLHeadingElement>(null);
+  const span1Ref = useRef<HTMLSpanElement>(null);
+  const span2Ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // First heading animation
+      if (heading1Ref.current) {
+        gsap.set(heading1Ref.current, {
+          '--bg-pos': '200%',
+          '--stroke-opacity': '0',
+        });
+
+        gsap.to(heading1Ref.current, {
+          '--bg-pos': '100%',
+          '--stroke-opacity': '1',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'top -10%',
+            scrub: true,
+          },
+        });
+      }
+
+      // First span (Our Expertise)
+      if (span1Ref.current) {
+        gsap.set(span1Ref.current, {
+          '--bg-pos': '200%',
+          '--stroke-opacity': '0',
+        });
+
+        gsap.to(span1Ref.current, {
+          '--bg-pos': '100%',
+          '--stroke-opacity': '1',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'top -10%',
+            scrub: true,
+          },
+        });
+      }
+
+      // Second heading animation
+      if (heading2Ref.current) {
+        gsap.set(heading2Ref.current, {
+          '--bg-pos': '200%',
+          '--stroke-opacity': '0',
+        });
+
+        gsap.to(heading2Ref.current, {
+          '--bg-pos': '100%',
+          '--stroke-opacity': '1',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'center bottom',
+            end: 'center -20%',
+            scrub: true,
+          },
+        });
+      }
+
+      // Second span (Online Excellence)
+      if (span2Ref.current) {
+        gsap.set(span2Ref.current, {
+          '--bg-pos': '200%',
+          '--stroke-opacity': '0',
+        });
+
+        gsap.to(span2Ref.current, {
+          '--bg-pos': '100%',
+          '--stroke-opacity': '1',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'center bottom',
+            end: 'center -20%',
+            scrub: true,
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="about" className="py-20 pb-40" style={{ backgroundColor: '#000000' }}>
+    <section ref={sectionRef} id="about" className="py-20 pb-40 about-scroll-section" style={{ backgroundColor: '#000000' }}>
       <div className="container mx-auto px-6 md:px-12 lg:px-16">
         {/* Top Section */}
         <div className="grid md:grid-cols-2 gap-12 mb-20">
           {/* Left Side - Headline */}
-          <div className="relative">
+          <div className="relative about-scroll-title">
             {/* OUR STORY label */}
             <div className="mb-6 relative">
               <div className="absolute left-0 top-[-6px] w-16 h-8 border-l-2 border-t-2 border-white/20"></div>
@@ -18,11 +120,13 @@ export default function About() {
             <div className="absolute left-0 top-8 w-2 h-24 md:h-32 bg-gradient-to-b from-[#6366F1] to-transparent"></div>
             
             {/* Main Headline */}
-            <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight relative z-10 ml-6 md:ml-10 lg:ml-12">
-              Your Vision<br/>
-              <span className="text-[#6366F1]">Our Expertise</span><br/>
-              Your Success
-            </h2>
+            <div className="about-scroll-heading relative z-10 ml-6 md:ml-10 lg:ml-12">
+              <h2 ref={heading1Ref} className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight about-scroll-title">
+                Your Vision<br/>
+                <span ref={span1Ref} className="about-scroll-span">Our Expertise</span><br/>
+                Your Success
+              </h2>
+            </div>
           </div>
 
           {/* Right Side - Image Cards */}
@@ -134,11 +238,13 @@ export default function About() {
             </div>
 
             {/* Main Headline */}
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight ml-4 md:ml-8">
-              Your Gateway To{' '}
-              <span className="text-[#6366F1]">Online Excellence</span>{' '}
-              Dream Big In Pixels.
-            </h2>
+            <div className="about-scroll-heading ml-4 md:ml-8">
+              <h2 ref={heading2Ref} className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight about-scroll-title">
+                Your Gateway To{' '}
+                <span ref={span2Ref} className="about-scroll-span">Online Excellence</span>{' '}
+                Dream Big In Pixels.
+              </h2>
+            </div>
 
             {/* Description */}
             <p className="text-lg text-white/60 leading-relaxed">

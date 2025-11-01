@@ -10,7 +10,7 @@ export default function Navbar() {
     { name: "Services", href: "#services" },
     { name: "Products", href: "#products" },
     { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Get a Quote", href: "#contact" },
   ];
 
   return (
@@ -44,6 +44,15 @@ export default function Navbar() {
                 onClick={(e) => {
                   e.preventDefault();
                   const targetId = link.href.replace('#', '');
+                  
+                  // Handle contact link specially - open modal instead of scrolling
+                  if (targetId === 'contact') {
+                    if ((window as any).openContactModal) {
+                      (window as any).openContactModal();
+                    }
+                    return;
+                  }
+                  
                   const target = document.getElementById(targetId);
                   if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -93,6 +102,15 @@ export default function Navbar() {
                   e.preventDefault();
                   setIsOpen(false);
                   const targetId = link.href.replace('#', '');
+                  
+                  // Handle contact link specially - open modal instead of scrolling
+                  if (targetId === 'contact') {
+                    if ((window as any).openContactModal) {
+                      (window as any).openContactModal();
+                    }
+                    return;
+                  }
+                  
                   const target = document.getElementById(targetId);
                   if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });

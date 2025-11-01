@@ -597,5 +597,166 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Khand', sans-serif;
 }
+
+/* Parallax Services Section Styles */
+.services-parallax-container {
+  position: relative;
+  width: 100%;
+  z-index: 1000;
+}
+
+.section-parallax {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  left: 0;
+  text-align: center;
+  letter-spacing: 4px;
+  overflow: hidden;
+  clip: rect(0, auto, auto, 0);
+  font-family: 'Khand', sans-serif;
+}
+
+.section-parallax .fixed-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 800px;
+}
+
+.section-parallax h1 {
+  font-family: 'Array', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  font-weight: 700;
+}
+
+.section-parallax p {
+  font-family: 'Khand', sans-serif;
+  letter-spacing: 2px;
+  line-height: 1.8;
+  opacity: 0.9;
+}
+
+/* Scroll-Triggered Text Animation - Demo Section (GSAP-based) */
+.scroll-text-section {
+  position: relative;
+}
+
+.scroll-text-heading {
+  position: relative;
+}
+
+.scroll-text-title {
+  margin: 0;
+  line-height: 1.4;
+  font-size: inherit;
+  font-family: sans-serif;
+  background-image: linear-gradient(90deg, #ffffff 0 0);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  background-position-x: var(--bg-pos, 200%);
+  background-position-y: 0;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, var(--stroke-opacity, 0));
+  display: inline-block;
+  text-wrap: pretty;
+  letter-spacing: 0.08em;
+  word-spacing: 0.1em;
+  padding: 0 2rem;
+}
+
+.scroll-text-title::selection {
+  background: #6366F1;
+  color: white;
+}
+
+.scroll-text-heading:has(:focus-visible) {
+  outline: 0.05em dashed #6366F1;
+  outline-offset: 0.1em;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .scroll-text-title {
+    -webkit-text-stroke: unset;
+    background-image: linear-gradient(90deg, #ffffff 0 0),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0 0);
+    background-size: 200% 1lh, 100% 100%;
+    background-repeat: no-repeat, repeat;
+    background-position-x: var(--bg-pos, 200%);
+    background-position-y: 100%;
+  }
+}
+
+/* Scroll-Triggered Text Animation for About Section (GSAP-based) */
+.about-scroll-section {
+  position: relative;
+}
+
+.about-scroll-heading {
+  position: relative;
+}
+
+.about-scroll-title {
+  margin: 0;
+  line-height: 1;
+  font-size: inherit;
+  font-family: 'Array', sans-serif;
+  background-image: linear-gradient(90deg, #ffffff 0 0);
+  background-size: 200% 1lh;
+  background-repeat: no-repeat;
+  background-position-x: var(--bg-pos, 200%);
+  background-position-y: 100%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, var(--stroke-opacity, 0));
+  display: inline;
+  text-wrap: pretty;
+  letter-spacing: 0.05ch;
+}
+
+.about-scroll-span {
+  background-image: linear-gradient(90deg, #6366F1 0 0);
+  background-size: 200% 1lh;
+  background-repeat: no-repeat;
+  background-position-x: var(--bg-pos, 200%);
+  background-position-y: 100%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 2px rgba(99, 102, 241, var(--stroke-opacity, 0));
+  display: inline;
+}
+
+.about-scroll-heading h2::selection,
+.about-scroll-heading h1::selection {
+  background: #6366F1;
+  color: white;
+}
+
+.about-scroll-heading:has(:focus-visible) {
+  outline: 0.05em dashed #6366F1;
+  outline-offset: 0.1em;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .about-scroll-title {
+    -webkit-text-stroke: unset;
+    background-image: linear-gradient(90deg, #ffffff 0 0),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0 0);
+    background-size: 200% 1lh, 100% 100%;
+    background-repeat: no-repeat, repeat;
+    background-position-x: var(--bg-pos, 200%);
+    background-position-y: 100%;
+  }
+}
+

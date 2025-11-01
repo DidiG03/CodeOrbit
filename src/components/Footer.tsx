@@ -8,7 +8,11 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function Footer() {
+type FooterProps = {
+  onGetQuoteClick?: () => void;
+};
+
+export default function Footer({ onGetQuoteClick }: FooterProps) {
     const footerRef = useRef<HTMLElement>(null);
     const [hasScrolled, setHasScrolled] = useState(false);
     const codeOrbitRef = useRef<HTMLDivElement>(null);
@@ -347,17 +351,16 @@ export default function Footer() {
                 </a>
                 <a 
                   href="#contact" 
-                  className="text-gray-900 hover:text-gray-700 transition-colors"
+                  className="text-gray-900 hover:text-gray-700 transition-colors cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
-                    const target = document.getElementById('contact');
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (onGetQuoteClick) {
+                      onGetQuoteClick();
                     }
                   }}
                   style={{ width: '20%', textAlign: 'center' }}
                 >
-                  Contact
+                  Get a Quote
                 </a>
 
               </div>
@@ -405,16 +408,15 @@ export default function Footer() {
                 </a>
                 <a 
                   href="#contact" 
-                  className="text-gray-900 hover:text-gray-700 transition-colors"
+                  className="text-gray-900 hover:text-gray-700 transition-colors cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
-                    const target = document.getElementById('contact');
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (onGetQuoteClick) {
+                      onGetQuoteClick();
                     }
                   }}
                 >
-                  Contact
+                  Get a Quote
                 </a>
 
               </div>
