@@ -18,7 +18,7 @@ export default function ScrollTextDemo() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // First line animation
+      // First line animation - animates first
       if (line1Ref.current) {
         gsap.set(line1Ref.current, {
           '--bg-pos': '200%',
@@ -31,14 +31,14 @@ export default function ScrollTextDemo() {
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 80%',
-            end: 'top 40%',
+            start: 'top bottom',
+            end: 'top 60%',
             scrub: true,
           },
         });
       }
 
-      // Second line animation
+      // Second line animation - animates after first line completes
       if (line2Ref.current) {
         gsap.set(line2Ref.current, {
           '--bg-pos': '200%',
@@ -51,14 +51,14 @@ export default function ScrollTextDemo() {
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 50%',
-            end: 'top 10%',
+            start: 'top 60%',
+            end: 'top 20%',
             scrub: true,
           },
         });
       }
 
-      // Third line animation
+      // Third line animation - animates after second line completes
       if (line3Ref.current) {
         gsap.set(line3Ref.current, {
           '--bg-pos': '200%',
@@ -72,7 +72,7 @@ export default function ScrollTextDemo() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 20%',
-            end: 'top -10%',
+            end: 'top -20%',
             scrub: true,
           },
         });
@@ -100,19 +100,22 @@ export default function ScrollTextDemo() {
           <div className="scroll-text-heading text-center max-w-6xl mx-auto">
             <h1 
               ref={line1Ref}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-relaxed scroll-text-title block"
+              className="font-bold leading-relaxed scroll-text-title block"
+              style={{ fontSize: 'clamp(2rem, 8vw, 4.5rem)' }}
             >
               Transform Ideas Into Reality
             </h1>
             <h1 
               ref={line2Ref}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-relaxed scroll-text-title block"
+              className="font-bold leading-relaxed scroll-text-title block"
+              style={{ fontSize: 'clamp(2rem, 8vw, 4.5rem)' }}
             >
               Through Innovation And
             </h1>
             <h1 
               ref={line3Ref}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-relaxed scroll-text-title block"
+              className="font-bold leading-relaxed scroll-text-title block"
+              style={{ fontSize: 'clamp(2rem, 8vw, 4.5rem)' }}
             >
               Excellence
             </h1>

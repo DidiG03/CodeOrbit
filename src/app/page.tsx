@@ -1,12 +1,24 @@
 "use client"
 
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
-import ScrollTextDemo from '@/components/ScrollTextDemo';
-import About from '@/components/About';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
+
+// Lazy load components below the fold to improve FCP
+const ScrollTextDemo = dynamic(() => import('@/components/ScrollTextDemo'), { 
+  ssr: false,
+  loading: () => <div className="min-h-screen bg-[#060010]" />
+});
+const About = dynamic(() => import('@/components/About'), { 
+  ssr: false,
+  loading: () => <div className="min-h-screen bg-black" />
+});
+const Contact = dynamic(() => import('@/components/Contact'), { ssr: false });
+const Footer = dynamic(() => import('@/components/Footer'), { 
+  ssr: false,
+  loading: () => <div className="min-h-[200px] bg-[#e8e6e2]" />
+});
 
 export default function Home() {
   const [isContactOpen, setIsContactOpen] = useState(false);

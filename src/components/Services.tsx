@@ -226,10 +226,16 @@ export default function Services() {
                 {index === 0 && (
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <div className="lg:col-span-7 order-2 lg:order-1">
-                      <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+                      <h1 
+                        className="font-bold mb-4 md:mb-6"
+                        style={{ fontSize: 'clamp(1.75rem, 6vw, 3.75rem)' }}
+                      >
                         {service.title}
                       </h1>
-                      <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
+                      <p 
+                        className="leading-relaxed opacity-90"
+                        style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
+                      >
                         {service.description}
                       </p>
                     </div>
@@ -272,10 +278,16 @@ export default function Services() {
                       </div>
                     )}
                     <div className="lg:col-span-7 flex flex-col justify-center">
-                      <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+                      <h1 
+                        className="font-bold mb-4 md:mb-6"
+                        style={{ fontSize: 'clamp(1.75rem, 6vw, 3.75rem)' }}
+                      >
                         {service.title}
                       </h1>
-                      <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
+                      <p 
+                        className="leading-relaxed opacity-90"
+                        style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
+                      >
                         {service.description}
                       </p>
                     </div>
@@ -285,10 +297,16 @@ export default function Services() {
                 {/* Unique Layout for Slide 2 - Full screen background, text centered only */}
                 {index === 2 && (
                   <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
-                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+                    <h1 
+                      className="font-bold mb-4 md:mb-6"
+                      style={{ fontSize: 'clamp(1.75rem, 6vw, 3.75rem)' }}
+                    >
                       {service.title}
                     </h1>
-                    <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
+                    <p 
+                      className="leading-relaxed opacity-90"
+                      style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
+                    >
                       {service.description}
                     </p>
                   </div>
@@ -314,10 +332,16 @@ export default function Services() {
                       </div>
                     )}
                     <div className="lg:col-span-7 flex flex-col justify-center">
-                      <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+                      <h1 
+                        className="font-bold mb-4 md:mb-6"
+                        style={{ fontSize: 'clamp(1.75rem, 6vw, 3.75rem)' }}
+                      >
                         {service.title}
                       </h1>
-                      <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
+                      <p 
+                        className="leading-relaxed opacity-90"
+                        style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
+                      >
                         {service.description}
                       </p>
                     </div>

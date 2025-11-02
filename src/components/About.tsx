@@ -113,7 +113,7 @@ export default function About() {
             {/* OUR STORY label */}
             <div className="mb-6 relative">
               <div className="absolute left-0 top-[-6px] w-16 h-8 border-l-2 border-t-2 border-white/20"></div>
-              <span className="text-l uppercase tracking-widest text-white/60 ml-6">About US</span>
+              <span className="text-l uppercase tracking-widest text-white/60 ml-6" style={{ fontFamily: 'Khand, sans-serif' }}>About US</span>
             </div>
             
             {/* Blue Gradient Accent Bar */}
@@ -121,40 +121,15 @@ export default function About() {
             
             {/* Main Headline */}
             <div className="about-scroll-heading relative z-10 ml-6 md:ml-10 lg:ml-12">
-              <h2 ref={heading1Ref} className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight about-scroll-title">
+              <h2 
+                ref={heading1Ref} 
+                className="font-semibold leading-tight about-scroll-title"
+                style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)' }}
+              >
                 Your Vision<br/>
                 <span ref={span1Ref} className="about-scroll-span">Our Expertise</span><br/>
                 Your Success
               </h2>
-            </div>
-          </div>
-
-          {/* Right Side - Image Cards */}
-          <div className="flex items-center justify-center gap-4 md:gap-6 flex-wrap md:flex-nowrap">
-            {/* First Card */}
-            <div className="relative rounded-lg overflow-hidden group w-48 h-48 md:w-56 md:h-56">
-              <img 
-                src="/images/frame2.jpg" 
-                alt="Tech Blog" 
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute top-3 left-3 right-3 flex gap-2">
-                <span className="px-3 py-1 bg-white/90 backdrop-blur text-xs font-medium rounded-full">Tech Blog</span>
-                <span className="px-3 py-1 bg-white/90 backdrop-blur text-xs font-medium rounded-full">Trends</span>
-              </div>
-            </div>
-
-            {/* Second Card */}
-            <div className="relative rounded-lg overflow-hidden group w-48 h-48 md:w-56 md:h-56">
-              <img 
-                src="/images/frame3.jpg" 
-                alt="Trends" 
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute top-3 left-3 right-3 flex gap-2">
-                <span className="px-3 py-1 bg-white/90 backdrop-blur text-xs font-medium rounded-full">Tech Blog</span>
-                <span className="px-3 py-1 bg-white/90 backdrop-blur text-xs font-medium rounded-full">Trends</span>
-              </div>
             </div>
           </div>
         </div>
@@ -239,7 +214,11 @@ export default function About() {
 
             {/* Main Headline */}
             <div className="about-scroll-heading ml-4 md:ml-8">
-              <h2 ref={heading2Ref} className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight about-scroll-title">
+              <h2 
+                ref={heading2Ref} 
+                className="font-bold leading-tight about-scroll-title"
+                style={{ fontSize: 'clamp(2rem, 7vw, 3.75rem)' }}
+              >
                 Your Gateway To{' '}
                 <span ref={span2Ref} className="about-scroll-span">Online Excellence</span>{' '}
                 Dream Big In Pixels.
