@@ -31,8 +31,8 @@ export default function ScrollTextDemo() {
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'top 60%',
+            start: 'top 80%',
+            end: 'top 40%',
             scrub: true,
           },
         });
@@ -51,8 +51,8 @@ export default function ScrollTextDemo() {
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 60%',
-            end: 'top 20%',
+            start: 'top 40%',
+            end: 'top 0%',
             scrub: true,
           },
         });
@@ -71,8 +71,8 @@ export default function ScrollTextDemo() {
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 20%',
-            end: 'top -20%',
+            start: 'top 0%',
+            end: 'top -40%',
             scrub: true,
           },
         });
@@ -86,36 +86,50 @@ export default function ScrollTextDemo() {
     <section 
       ref={sectionRef}
       id="scroll-text-demo" 
-      className="py-32 pb-40 scroll-text-section" 
+      className="py-32 pb-40 scroll-text-section relative" 
       style={{ 
-        backgroundColor: '#060010', 
+        backgroundColor: '#000000',
         minHeight: '100vh', 
         display: 'flex', 
         alignItems: 'center', 
-        justifyContent: 'center' 
+        justifyContent: 'center',
+        overflow: 'hidden',
       }}
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16">
-        <div className="scroll-text-wrapper">
-          <div className="scroll-text-heading text-center max-w-6xl mx-auto">
+      {/* Smoke Background - Above black background */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: 'url(/images/smoke-background-design.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.6,
+          zIndex: 1,
+        }}
+      />
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 relative" style={{ zIndex: 20 }}>
+        <div className="scroll-text-wrapper relative" style={{ zIndex: 20 }}>
+          <div className="scroll-text-heading text-center max-w-6xl mx-auto relative" style={{ zIndex: 20 }}>
             <h1 
               ref={line1Ref}
-              className="font-bold leading-relaxed scroll-text-title block"
-              style={{ fontSize: 'clamp(2rem, 8vw, 4.5rem)' }}
+              className="font-bold leading-relaxed scroll-text-title block relative"
+              style={{ fontSize: 'clamp(2rem, 8vw, 4.5rem)', zIndex: 20, fontFamily: 'Khand, sans-serif' }}
             >
               Transform Ideas Into Reality
             </h1>
             <h1 
               ref={line2Ref}
-              className="font-bold leading-relaxed scroll-text-title block"
-              style={{ fontSize: 'clamp(2rem, 8vw, 4.5rem)' }}
+              className="font-bold leading-relaxed scroll-text-title block relative"
+              style={{ fontSize: 'clamp(2rem, 8vw, 4.5rem)', zIndex: 20, fontFamily: 'Khand, sans-serif' }}
             >
               Through Innovation And
             </h1>
             <h1 
               ref={line3Ref}
-              className="font-bold leading-relaxed scroll-text-title block"
-              style={{ fontSize: 'clamp(2rem, 8vw, 4.5rem)' }}
+              className="font-bold leading-relaxed scroll-text-title block relative"
+              style={{ fontSize: 'clamp(2rem, 8vw, 4.5rem)', zIndex: 20, fontFamily: 'Khand, sans-serif' }}
             >
               Excellence
             </h1>

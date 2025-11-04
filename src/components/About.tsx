@@ -14,6 +14,7 @@ export default function About() {
   const heading2Ref = useRef<HTMLHeadingElement>(null);
   const span1Ref = useRef<HTMLSpanElement>(null);
   const span2Ref = useRef<HTMLSpanElement>(null);
+  const firstImageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -98,6 +99,26 @@ export default function About() {
           },
         });
       }
+
+      // First image expansion animation
+      if (firstImageRef.current) {
+        gsap.set(firstImageRef.current, {
+          scale: 0.2,
+          opacity: 0,
+        });
+
+        gsap.to(firstImageRef.current, {
+          scale: 1,
+          opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: firstImageRef.current,
+            start: 'top 90%',
+            end: 'top 30%',
+            scrub: true,
+          },
+        });
+      }
     });
 
     return () => ctx.revert();
@@ -137,12 +158,20 @@ export default function About() {
         {/* Bottom Section */}
         <div className="grid md:grid-cols-2 gap-12">
           {/* Left Side - Large Team Image */}
-          <div className="relative">
+          <div className="relative overflow-hidden rounded-2xl">
+            {/* Fade overlay on edges */}
+            <div 
+              className="absolute inset-0 pointer-events-none z-10"
+              style={{
+                background: 'radial-gradient(circle at center, transparent 0%, transparent 60%, rgba(0,0,0,0.3) 80%, rgba(0,0,0,0.6) 100%)',
+              }}
+            />
             <img 
+              ref={firstImageRef}
               src="/images/frame4.jpg" 
               alt="Our Team" 
-              className="w-full h-full rounded-2xl object-cover"
-              style={{ minHeight: '400px' }}
+              className="w-full h-full rounded-2xl object-cover relative"
+              style={{ minHeight: '400px', transformOrigin: 'center center' }}
             />
           </div>
 

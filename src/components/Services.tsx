@@ -1,13 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import LaserLine from './LaserLine';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface ServiceSlide {
   title: string;
@@ -19,10 +12,6 @@ interface ServiceSlide {
 
 export default function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const leftLineRef = useRef<HTMLDivElement>(null);
-  const rightLineRef = useRef<HTMLDivElement>(null);
-  const smookSectionRef = useRef<HTMLDivElement>(null);
-  const servicesBoxRef = useRef<HTMLDivElement>(null);
 
   const services: ServiceSlide[] = [
     {
@@ -56,140 +45,194 @@ export default function Services() {
   ];
 
   useEffect(() => {
-    // Calculate total height needed for 4 sections
-    const totalHeight = window.innerHeight * 4;
+    // Calculate total height needed for 5 sections (Our Services + 4 service slides)
+    // Our Services slide is 150vh, others are 100vh each
+    const totalHeight = window.innerHeight * 5.5; // 1.5vh (Our Services) + 4vh (4 service slides)
     if (containerRef.current) {
       containerRef.current.style.height = `${totalHeight}px`;
     }
-
-    // Animate parallax section vertical lines and services box
-    const ctx = gsap.context(() => {
-      // Services box - stays fixed, no resizing
-
-      // Parallax section vertical lines
-      if (leftLineRef.current && rightLineRef.current && containerRef.current) {
-        // Set initial state
-        gsap.set([leftLineRef.current, rightLineRef.current], {
-          height: '0%',
-          opacity: 0,
-        });
-
-        // Animate lines down as user scrolls through the parallax sections
-        gsap.to([leftLineRef.current, rightLineRef.current], {
-          height: `${window.innerHeight * 4}px`,
-          opacity: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top top',
-            end: `+=${window.innerHeight * 4}`,
-            scrub: true,
-          },
-        });
-      }
-    });
-
-    return () => ctx.revert();
   }, []);
 
   return (
     <>
-      {/* Our Services Section */}
-      <section
-        ref={smookSectionRef}
-        id="services"
-        className="relative min-h-screen flex items-center justify-center"
-        style={{ 
-          backgroundColor: '#060010',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Reversed Smoke Background */}
+      {/* Parallax Sections Container */}
+      <div ref={containerRef} className="services-parallax-container relative">
+        {/* Our Services Title Slide */}
         <div
+          className="section-parallax"
           style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: 'url(/images/smoke-background-design.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            transform: 'scaleY(-1)',
-            zIndex: 0,
-          }}
-        />
-        {/* LaserLine Background - Vertical Line Only */}
-        <div 
-          className="absolute w-full"
-          style={{ 
-            zIndex: 1,
-            top: '75%',
-            height: '50%'
-          }}
-        >
-          <LaserLine
-            verticalBeamOffset={0.0}
-            verticalSizing={2.0}
-            flowSpeed={0.4}
-            flowStrength={0.3}
-            color="#6366F1"
-          />
-        </div>
-
-        {/* Services Box - Opens at top, closes as you scroll */}
-        <div
-          ref={servicesBoxRef}
-          style={{
-            position: 'absolute',
-            top: '26%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '86%',
-            height: '100%',
-            borderTop: 'none',
-            backgroundColor: '#060010',
-            borderRadius: '20px',
-            border: '2px solid #6366F1',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            zIndex: 15,
-            boxShadow: '0 0 30px rgba(99, 102, 241, 0.3)',
+            top: '0vh',
+            backgroundColor: '#000000',
+            color: '#fff',
+            zIndex: 1000,
+            boxShadow: 'none',
+            height: '150vh',
             overflow: 'hidden',
           }}
         >
-          <div className="text-center px-8 py-12" style={{ marginTop: '8rem' }}>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
-              Our Services
-            </h2>
-            <p className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-              Discover how we can transform your business
-            </p>
+          {/* Background Images at different angles */}
+          {/* Image 1 - Top Left - Portrait orientation */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '10%',
+              left: '8%',
+              width: '300px',
+              height: '400px',
+              zIndex: 1,
+              transform: 'rotate(-8deg)',
+              opacity: 0.6,
+            }}
+          >
+            <img
+              src="/images/frame1.jpg"
+              alt="Background"
+              className="w-full h-full object-cover rounded-xl"
+              style={{
+                filter: 'brightness(0.7) blur(0.5px)',
+              }}
+            />
+          </div>
+
+          {/* Image 2 - Top Right - Landscape orientation */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '12%',
+              right: '6%',
+              width: '450px',
+              height: '300px',
+              zIndex: 1,
+              transform: 'rotate(18deg)',
+              opacity: 0.55,
+            }}
+          >
+            <img
+              src="/images/frame2.jpg"
+              alt="Background"
+              className="w-full h-full object-cover rounded-xl"
+              style={{
+                filter: 'brightness(0.7) blur(0.5px)',
+              }}
+            />
+          </div>
+
+          {/* Image 3 - Bottom Left - Landscape orientation */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '10%',
+              left: '6%',
+              width: '420px',
+              height: '280px',
+              zIndex: 1,
+              transform: 'rotate(-22deg)',
+              opacity: 0.6,
+            }}
+          >
+            <img
+              src="/images/frame3.jpg"
+              alt="Background"
+              className="w-full h-full object-cover rounded-xl"
+              style={{
+                filter: 'brightness(0.7) blur(0.5px)',
+              }}
+            />
+          </div>
+
+          {/* Image 4 - Bottom Right - Portrait orientation */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '12%',
+              right: '8%',
+              width: '300px',
+              height: '400px',
+              zIndex: 1,
+              transform: 'rotate(15deg)',
+              opacity: 0.55,
+            }}
+          >
+            <img
+              src="/images/frame4.jpg"
+              alt="Background"
+              className="w-full h-full object-cover rounded-xl"
+              style={{
+                filter: 'brightness(0.7) blur(0.5px)',
+              }}
+            />
+          </div>
+
+          <div className="fixed-content" style={{ maxWidth: '1400px', width: '90%', zIndex: 10 }}>
+            <div className="flex flex-col items-center justify-center" style={{ height: '150vh', paddingTop: '8vh' }}>
+              <div className="text-center relative z-10">
+                <h1 
+                  className="font-bold"
+                  style={{ fontSize: 'clamp(2rem, 8vw, 5rem)', marginBottom: '4rem' }}
+                >
+                  Our Services
+                </h1>
+                {/* Animated Arrow */}
+                <div
+                  className="arrow-container"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    animation: 'bounceArrow 2s ease-in-out infinite',
+                    cursor: 'pointer',
+                    marginTop: '4rem',
+                  }}
+                  onClick={() => {
+                    if (containerRef.current) {
+                      const containerTop = containerRef.current.getBoundingClientRect().top + window.scrollY;
+                      const nextSlidePosition = containerTop + (window.innerHeight * 1.5); // 150vh
+                      window.scrollTo({
+                        top: nextSlidePosition,
+                        behavior: 'smooth',
+                      });
+                    }
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '48px',
+                      height: '48px',
+                      borderRadius: '50%',
+                      border: '2px solid white',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      transition: 'all 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#6366F1';
+                      e.currentTarget.style.transform = 'scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'white';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Parallax Sections Container */}
-      <div ref={containerRef} className="services-parallax-container relative">
-        {/* Vertical Lines */}
-        <div
-          ref={leftLineRef}
-          className="absolute left-[7%] w-[1.5px] bg-gradient-to-b from-[#6366F1] via-[#8B5CF6] to-transparent pointer-events-none"
-          style={{
-            top: 0,
-            willChange: 'height',
-            zIndex: 2000,
-          }}
-        />
-        <div
-          ref={rightLineRef}
-          className="absolute right-[7%] w-[1.5px] bg-gradient-to-b from-[#6366F1] via-[#8B5CF6] to-transparent pointer-events-none"
-          style={{
-            top: 0,
-            willChange: 'height',
-            zIndex: 2000,
-          }}
-        />
         {services.map((service, index) => {
           const isFirst = index === 0;
           const isLast = index === services.length - 1;
@@ -199,7 +242,7 @@ export default function Services() {
               key={`service-slide-${index}`}
               className="section-parallax"
               style={{
-                top: `${index * 100}vh`,
+                top: `${150 + (index * 100)}vh`,
                 backgroundColor: service.bgColor,
                 color: service.textColor || '#fff',
                 zIndex: 1000 + index + 1,
@@ -278,16 +321,10 @@ export default function Services() {
                       </div>
                     )}
                     <div className="lg:col-span-7 flex flex-col justify-center">
-                      <h1 
-                        className="font-bold mb-4 md:mb-6"
-                        style={{ fontSize: 'clamp(1.75rem, 6vw, 3.75rem)' }}
-                      >
+                      <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
                         {service.title}
                       </h1>
-                      <p 
-                        className="leading-relaxed opacity-90"
-                        style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
-                      >
+                      <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                         {service.description}
                       </p>
                     </div>
@@ -297,16 +334,10 @@ export default function Services() {
                 {/* Unique Layout for Slide 2 - Full screen background, text centered only */}
                 {index === 2 && (
                   <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
-                    <h1 
-                      className="font-bold mb-4 md:mb-6"
-                      style={{ fontSize: 'clamp(1.75rem, 6vw, 3.75rem)' }}
-                    >
+                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
                       {service.title}
                     </h1>
-                    <p 
-                      className="leading-relaxed opacity-90"
-                      style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
-                    >
+                    <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                       {service.description}
                     </p>
                   </div>
@@ -332,16 +363,10 @@ export default function Services() {
                       </div>
                     )}
                     <div className="lg:col-span-7 flex flex-col justify-center">
-                      <h1 
-                        className="font-bold mb-4 md:mb-6"
-                        style={{ fontSize: 'clamp(1.75rem, 6vw, 3.75rem)' }}
-                      >
+                      <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
                         {service.title}
                       </h1>
-                      <p 
-                        className="leading-relaxed opacity-90"
-                        style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
-                      >
+                      <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                         {service.description}
                       </p>
                     </div>

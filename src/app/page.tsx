@@ -38,9 +38,9 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black overflow-x-hidden">
       <Hero onContactClick={() => setIsContactOpen(true)} />
-      <Services />
       <ScrollTextDemo />
       <About />
+      <Services />
       <div className="h-32 md:h-48 lg:h-64 bg-black"></div>
       <Footer onGetQuoteClick={() => setIsContactOpen(true)} />
       <Contact isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
