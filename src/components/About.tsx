@@ -248,75 +248,7 @@ export default function About() {
               creating exceptional digital experiences that drive business growth. With years 
               of experience in software development and a commitment to excellence, we help 
               businesses transform their ideas into reality through cutting-edge technology.
-            </p>
-
-            {/* Know More Button */}
-            <div className="btn-wrapper">
-              <button className="btn">
-                <svg
-                  className="btn-svg"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z" />
-                </svg>
-                <div className="txt-wrapper">
-                  <span className="txt-1">
-                    {Array.from("Know More").map((char, index) => (
-                      <span key={index} className="btn-letter">
-                        {char === " " ? "\u00A0" : char}
-                      </span>
-                    ))}
-                  </span>
-                </div>
-              </button>
-            </div>
-
-            {/* Timeline */}
-            <div className="space-y-6 pt-12 pb-8 md:pb-12">
-              {/* Timeline Line and Markers */}
-              <div className="relative h-32">
-                {/* Horizontal Line */}
-                <div className="absolute left-0 right-0 top-12 h-0.5 bg-white/20"></div>
-                
-                {/* Markers */}
-                <div className="flex justify-between h-full">
-                  <div className="flex flex-col items-center relative ml-4 pb-20 md:pb-24">
-                    <div className="absolute top-8 md:top-12 w-16 h-16 -translate-y-1/2">
-                        <img src="/images/frame5.jpg" alt="2000" className="w-16 h-16 rounded-full object-fill" />
-                    </div>
-                    <div className="absolute top-28 md:top-32">
-                      <div className="text-white text-sm mb-1 ml-4">2019</div>
-                      <div className="text-white/60 text-xs">Establishment & Foundation</div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center relative">
-                    <div className="absolute top-12 w-4 h-4 -translate-y-1/2">
-                      <div className="w-4 h-4 bg-white rounded-full"></div>
-                    </div>
-                    <div className="absolute top-20 text-white text-sm">2020</div>
-                  </div>
-                  <div className="flex flex-col items-center relative">
-                    <div className="absolute top-12 w-4 h-4 -translate-y-1/2">
-                      <div className="w-4 h-4 bg-white rounded-full"></div>
-                    </div>
-                    <div className="absolute top-20 text-white text-sm">2022</div>
-                  </div>
-                  <div className="flex flex-col items-center relative">
-                    <div className="absolute top-12 w-4 h-4 -translate-y-1/2">
-                      <div className="w-4 h-4 bg-white rounded-full"></div>
-                    </div>
-                    <div className="absolute top-20 text-white text-sm">2023</div>
-                  </div>
-                  <div className="flex flex-col items-center relative">
-                    <div className="absolute top-12 w-4 h-4 -translate-y-1/2">
-                      <div className="w-4 h-4 bg-white rounded-full"></div>
-                    </div>
-                    <div className="absolute top-20 text-white text-sm">2025</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </p>            
           </div>
 
           {/* Right Column - Interactive Image/Video */}
@@ -349,7 +281,7 @@ export default function About() {
                     autoPlay
                     playsInline
                     preload="metadata"
-                    poster="/images/frame6.jpg"
+                    poster="/images/cover-image.png"
                     onEnded={() => setIsVideoPlaying(false)}
                     onError={(e) => {
                       console.error('Video error:', e);
