@@ -15,7 +15,7 @@ export default function Services() {
 
   const services: ServiceSlide[] = [
     {
-      title: 'Web Development',
+      title: 'Web Solutions',
       description: 'Transform your business with cutting-edge web solutions and modern technologies that scale with your growth',
       images: ['/images/frame1.jpg', '/images/frame2.jpg'],
       bgColor: '#000000',
@@ -24,7 +24,7 @@ export default function Services() {
     {
       title: 'Tailored AI Solutions',
       description: 'Custom AI solutions tailored to your business needs, delivering seamless user experiences',
-      images: ['/images/frame3.jpg'],
+      images: ['/images/frame3.png'],
       bgColor: '#0a0a1a',
       textColor: '#fff',
     },
@@ -38,7 +38,7 @@ export default function Services() {
     {
       title: 'Digital Consulting',
       description: 'End-to-end solutions tailored to your business needs and goals, driving innovation and growth',
-      images: ['/images/frame6.jpg'],
+      images: ['/images/consulting.png'],
       bgColor: '#000000',
       textColor: '#fff',
     },
@@ -77,15 +77,15 @@ export default function Services() {
               position: 'absolute',
               top: '10%',
               left: '8%',
-              width: '300px',
-              height: '400px',
+              width: '500px',
+              height: '300px',
               zIndex: 1,
               transform: 'rotate(-8deg)',
               opacity: 0.6,
             }}
           >
             <img
-              src="/images/frame1.jpg"
+              src="/images/consulting.png"
               alt="Background"
               className="w-full h-full object-cover rounded-xl"
               style={{
@@ -131,7 +131,7 @@ export default function Services() {
             }}
           >
             <img
-              src="/images/frame3.jpg"
+              src="/images/frame3.png"
               alt="Background"
               className="w-full h-full object-cover rounded-xl"
               style={{
@@ -154,7 +154,7 @@ export default function Services() {
             }}
           >
             <img
-              src="/images/frame4.jpg"
+              src="/images/cover-image-2.png"
               alt="Background"
               className="w-full h-full object-cover rounded-xl"
               style={{
@@ -281,6 +281,26 @@ export default function Services() {
                       >
                         {service.description}
                       </p>
+                      <div className="flex justify-center mt-6">
+                        <button className="btn" style={{ overflow: 'hidden', position: 'relative' }}>
+                        <svg
+                          className="btn-svg"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z" />
+                        </svg>
+                        <div className="txt-wrapper" style={{ overflow: 'hidden', width: '7.5em', flexShrink: 0 }}>
+                          <span className="txt-1">
+                            {Array.from("Know More").map((char, index) => (
+                              <span key={index} className="btn-letter">
+                                {char === " " ? "\u00A0" : char}
+                              </span>
+                            ))}
+                          </span>
+                        </div>
+                      </button>
+                      </div>
                     </div>
                     {service.images && service.images.length > 0 && (
                       <div className="lg:col-span-5 order-1 lg:order-2">
@@ -327,6 +347,26 @@ export default function Services() {
                       <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                         {service.description}
                       </p>
+                      <div className="flex justify-center mt-6">
+                        <button className="btn" style={{ overflow: 'hidden', position: 'relative' }}>
+                          <svg
+                            className="btn-svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z" />
+                          </svg>
+                          <div className="txt-wrapper" style={{ overflow: 'hidden', width: '7.5em', flexShrink: 0 }}>
+                            <span className="txt-1">
+                              {Array.from("Know More").map((char, charIndex) => (
+                                <span key={charIndex} className="btn-letter">
+                                  {char === " " ? "\u00A0" : char}
+                                </span>
+                              ))}
+                            </span>
+                          </div>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -340,6 +380,26 @@ export default function Services() {
                     <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                       {service.description}
                     </p>
+                    <div className="flex justify-center mt-6">
+                      <button className="btn" style={{ overflow: 'hidden', position: 'relative' }}>
+                        <svg
+                          className="btn-svg"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z" />
+                        </svg>
+                        <div className="txt-wrapper" style={{ overflow: 'hidden', width: '7.5em', flexShrink: 0 }}>
+                          <span className="txt-1">
+                            {Array.from("Know More").map((char, charIndex) => (
+                              <span key={charIndex} className="btn-letter">
+                                {char === " " ? "\u00A0" : char}
+                              </span>
+                            ))}
+                          </span>
+                        </div>
+                      </button>
+                    </div>
                   </div>
                 )}
 
@@ -369,6 +429,26 @@ export default function Services() {
                       <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                         {service.description}
                       </p>
+                      <div className="flex justify-center mt-6">
+                        <button className="btn" style={{ overflow: 'hidden', position: 'relative' }}>
+                          <svg
+                            className="btn-svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z" />
+                          </svg>
+                          <div className="txt-wrapper" style={{ overflow: 'hidden', width: '7.5em', flexShrink: 0 }}>
+                            <span className="txt-1">
+                              {Array.from("Know More").map((char, charIndex) => (
+                                <span key={charIndex} className="btn-letter">
+                                  {char === " " ? "\u00A0" : char}
+                                </span>
+                              ))}
+                            </span>
+                          </div>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}

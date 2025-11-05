@@ -74,15 +74,15 @@ export default function Hero({ onContactClick }: HeroProps = {}) {
       {/* Interactive Reveal Image */}
       <img
         ref={revealImgRef}
-        src="/images/frame1.jpg"
+        src="/images/cover-image.png"
         alt="Reveal effect"
         style={{
           position: 'absolute',
           width: '100%',
-          top: '-50%',
+          top: '-30%',
           zIndex: 5,
           mixBlendMode: 'lighten',
-          opacity: 0.3,
+          opacity: 0.8,
           pointerEvents: 'none',
           // @ts-ignore - CSS custom properties
           '--mx': '-9999px',

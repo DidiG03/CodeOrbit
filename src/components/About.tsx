@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -15,6 +15,8 @@ export default function About() {
   const span1Ref = useRef<HTMLSpanElement>(null);
   const span2Ref = useRef<HTMLSpanElement>(null);
   const firstImageRef = useRef<HTMLImageElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -124,6 +126,15 @@ export default function About() {
     return () => ctx.revert();
   }, []);
 
+  const handlePlayVideo = () => {
+    setIsVideoPlaying(true);
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.error('Error playing video:', error);
+      });
+    }
+  };
+
   return (
     <section ref={sectionRef} id="about" className="py-20 pb-40 about-scroll-section" style={{ backgroundColor: '#000000' }}>
       <div className="container mx-auto px-6 md:px-12 lg:px-16">
@@ -176,7 +187,7 @@ export default function About() {
           </div>
 
           {/* Right Side - Content */}
-          <div className="space-y-8">
+          <div className="space-y-8 mt-12">
             {/* Description */}
             <p className="text-lg text-white/70 leading-relaxed">
               We are a team of passionate developers, designers, and innovators dedicated to 
@@ -187,7 +198,7 @@ export default function About() {
             </p>
 
             {/* Statistics */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
+            {/* <div className="grid grid-cols-2 gap-4 md:gap-6">
               <div>
                 <div className="text-3xl md:text-5xl font-bold text-white mb-2">XX+</div>
                 <div className="text-sm md:text-base text-white/60">Completed Projects</div>
@@ -204,30 +215,7 @@ export default function About() {
                 <div className="text-3xl md:text-5xl font-bold text-white mb-2">XX+</div>
                 <div className="text-sm md:text-base text-white/60">Worldwide Honors</div>
               </div>
-            </div>
-
-            {/* Watch Intro Section */}
-            <div className="flex items-center gap-4 pt-8">
-              <div className="flex -space-x-3">
-                {/* Profile pictures placeholder - using colored circles */}
-                <div className="w-12 h-12 rounded-full border-2 border-white/30 bg-gradient-to-br from-purple-500 to-blue-500"></div>
-                <div className="w-12 h-12 rounded-full border-2 border-white/30 bg-gradient-to-br from-purple-500 to-[#6366F1]"></div>
-                <div className="w-12 h-12 rounded-full border-2 border-white/30 bg-gradient-to-br from-blue-500 to-cyan-500"></div>
-              </div>
-              <button className="flex items-center gap-2 md:gap-3 text-white text-sm md:text-lg font-medium hover:text-[#6366F1] transition-colors">
-                <span>WATCH INTRO</span>
-              </button>
-              {/* Play Button */}
-              <button 
-                className="w-10 h-10 md:w-14 md:h-14 rounded-full border-2 border-[#6366F1] flex items-center justify-center hover:bg-[#6366F1] transition-colors group"
-                aria-label="Watch intro video"
-                title="Watch intro video"
-              >
-                <svg className="w-4 h-4 md:w-6 md:h-6 text-[#6366F1] group-hover:text-white transition-colors ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </button>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -331,46 +319,88 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right Column - Interactive Image */}
+          {/* Right Column - Interactive Image/Video */}
           <div className="relative group">
             <div className="relative w-full h-full">
-              {/* Main Image */}
-              <img 
-                src="/images/frame6.jpg" 
-                alt="Team Collaboration" 
-                className="w-full h-full rounded-2xl object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
-                style={{ minHeight: '400px' }}
-              />
+              {/* Main Image - shown when video is not playing */}
+              {!isVideoPlaying && (
+                <img 
+                  src="/images/Cover-Image.png" 
+                  alt="Team Collaboration" 
+                  className="w-full h-full rounded-2xl object-cover transition-all duration-300"
+                  style={{ minHeight: '400px' }}
+                />
+              )}
               
-              {/* Interactive Button with Rotating Text */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-                <svg 
-                  className="w-32 h-32 md:w-48 md:h-48 pointer-events-none"
-                  viewBox="0 0 192 192"
-                  style={{ 
-                    animation: 'spin 20s linear infinite',
-                    transformOrigin: '96px 96px'
-                  }}
-                >
-                  <defs>
-                    <path id="circle" d="M 96,96 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
-                  </defs>
-                  <text fontSize="11" fill="white" opacity="0.8">
-                    <textPath href="#circle" startOffset="0%">
-                      Get In Touch · Get In Touch · Get In Touch · 
-                    </textPath>
-                  </text>
-                </svg>
-                <button 
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-[#6366F1] rounded-full flex items-center justify-center hover:bg-[#4F46E5] transition-colors shadow-lg pointer-events-auto"
-                  aria-label="Get in touch"
-                  title="Get in touch"
-                >
-                  <svg className="w-4 h-4 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.5 12L8 6.5v11L17.5 12z" />
+              {/* Video - shown when playing */}
+              {isVideoPlaying && (
+                <div className="relative w-full h-full rounded-2xl overflow-hidden" style={{ minHeight: '400px', backgroundColor: '#000' }}>
+                  <video
+                    ref={videoRef}
+                    className="w-full h-full rounded-2xl object-cover"
+                    style={{ 
+                      minHeight: '400px',
+                      width: '100%',
+                      height: '100%',
+                      display: 'block',
+                      backgroundColor: '#000'
+                    }}
+                    controls
+                    autoPlay
+                    playsInline
+                    preload="metadata"
+                    poster="/images/frame6.jpg"
+                    onEnded={() => setIsVideoPlaying(false)}
+                    onError={(e) => {
+                      console.error('Video error:', e);
+                      setIsVideoPlaying(false);
+                      alert('Video playback error. Please ensure the video file (1104.mp4) exists in the public folder and is in MP4 format with H.264 codec.');
+                    }}
+                    onLoadedMetadata={() => {
+                      if (videoRef.current) {
+                        console.log('Video dimensions:', videoRef.current.videoWidth, 'x', videoRef.current.videoHeight);
+                      }
+                    }}
+                  >
+                    <source src="/1104.mp4" type="video/mp4" />
+                    <source src="/1104(1).mov" type="video/quicktime" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              )}
+              
+              {/* Interactive Button with Rotating Text - only show when video is not playing */}
+              {!isVideoPlaying && (
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg 
+                    className="w-32 h-32 md:w-48 md:h-48 pointer-events-none"
+                    viewBox="0 0 192 192"
+                    style={{ 
+                      animation: 'spin 20s linear infinite',
+                      transformOrigin: '96px 96px'
+                    }}
+                  >
+                    <defs>
+                      <path id="circle" d="M 96,96 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
+                    </defs>
+                    <text fontSize="11" fill="white" opacity="0.8">
+                      <textPath href="#circle" startOffset="0%">
+                        Get In Touch · Get In Touch · Get In Touch · 
+                      </textPath>
+                    </text>
                   </svg>
-                </button>
-              </div>
+                  <button 
+                    onClick={handlePlayVideo}
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-[#6366F1] rounded-full flex items-center justify-center hover:bg-[#4F46E5] transition-colors shadow-lg pointer-events-auto"
+                    aria-label="Play video"
+                    title="Play video"
+                  >
+                    <svg className="w-4 h-4 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.5 12L8 6.5v11L17.5 12z" />
+                    </svg>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
