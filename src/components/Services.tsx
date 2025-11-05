@@ -17,7 +17,7 @@ export default function Services() {
     {
       title: 'Web Solutions',
       description: 'Transform your business with cutting-edge web solutions and modern technologies that scale with your growth',
-      images: ['/images/frame1.jpg', '/images/frame2.jpg'],
+      images: ['/images/img5.png', '/images/frame2.jpg'],
       bgColor: '#000000',
       textColor: '#fff',
     },

@@ -9,6 +9,8 @@ type ContactProps = {
 
 export default function Contact({ isOpen, onClose }: ContactProps) {
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,21 +22,49 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement form submission logic
-    console.log("Form submitted:", formData);
-    alert("Thank you for your quote request! We'll get back to you soon.");
-    setFormData({ 
-      name: "", 
-      email: "", 
-      company: "",
-      phone: "",
-      projectType: "",
-      budget: "",
-      timeline: "",
-      message: "" 
-    });
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch("/api/send-quote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send quote request");
+      }
+
+      setSubmitStatus("success");
+      setFormData({ 
+        name: "", 
+        email: "", 
+        company: "",
+        phone: "",
+        projectType: "",
+        budget: "",
+        timeline: "",
+        message: "" 
+      });
+
+      // Close modal after 2 seconds on success
+      setTimeout(() => {
+        onClose();
+        setSubmitStatus(null);
+      }, 2000);
+    } catch (error) {
+      console.error("Error submitting quote:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -219,13 +249,25 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
             />
           </div>
 
+          {submitStatus === "success" && (
+            <div className="pt-2 text-green-400 text-sm">
+              ✓ Thank you for your quote request! We'll get back to you soon.
+            </div>
+          )}
+          {submitStatus === "error" && (
+            <div className="pt-2 text-red-400 text-sm">
+              ✗ Something went wrong. Please try again or contact us directly.
+            </div>
+          )}
+          
           <div className="pt-4 flex justify-end">
             <button
               type="submit"
-              className="px-8 py-3 bg-white text-black font-semibold hover:bg-gray-200 transition-colors"
+              disabled={isSubmitting}
+              className="px-8 py-3 bg-white text-black font-semibold hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ fontSize: 'clamp(0.875rem, 1.618vw, 1rem)' }}
             >
-              Request Quote
+              {isSubmitting ? "Sending..." : "Request Quote"}
             </button>
           </div>
         </form>
