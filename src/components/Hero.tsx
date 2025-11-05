@@ -6,7 +6,11 @@ import TextType from './TextType';
 import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 
-export default function Hero() {
+type HeroProps = {
+  onContactClick?: () => void;
+};
+
+export default function Hero({ onContactClick }: HeroProps = {}) {
   const revealImgRef = useRef<HTMLImageElement>(null);
   const h1Ref = useRef<HTMLHeadingElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -16,19 +20,19 @@ export default function Hero() {
     { label: 'Home', ariaLabel: 'Go to home page', link: '#hero' },
     { label: 'Services', ariaLabel: 'View our services', link: '#services' },
     { label: 'About', ariaLabel: 'Learn about us', link: '#about' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
+    { label: 'Get a Quote', ariaLabel: 'Get a quote', link: '#contact' }
   ];
 
   useEffect(() => {
     // Delay the appearance to sync with LaserFlow fade-in
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 1000);
+    }, 600);
 
     // Show menu after hero appears
     const menuTimer = setTimeout(() => {
       setMenuVisible(true);
-    }, 1500);
+    }, 900);
 
     return () => {
       clearTimeout(timer);
@@ -127,7 +131,7 @@ export default function Hero() {
           fontSize: '2rem',
           zIndex: 15,
           opacity: isVisible ? 1 : 0,
-          transition: 'opacity 1.5s ease-in-out',
+          transition: 'opacity 0.9s ease-in-out',
           boxShadow: isVisible ? '0 0 30px rgba(99, 102, 241, 0.3)' : 'none'
         }}
       >
@@ -142,7 +146,7 @@ export default function Hero() {
               showCursor={true}
               cursorCharacter="|"
               cursorClassName="font-khand text-6xl md:text-8xl text-white"
-              initialDelay={1000}
+              initialDelay={600}
               loop={false}
             />
           </div>
@@ -154,7 +158,7 @@ export default function Hero() {
               typingSpeed={30}
               pauseDuration={1500}
               showCursor={false}
-              initialDelay={3500}
+              initialDelay={2100}
               loop={false}
             />
           </div>

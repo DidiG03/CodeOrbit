@@ -8,7 +8,11 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function Footer() {
+type FooterProps = {
+  onGetQuoteClick?: () => void;
+};
+
+export default function Footer({ onGetQuoteClick }: FooterProps) {
     const footerRef = useRef<HTMLElement>(null);
     const [hasScrolled, setHasScrolled] = useState(false);
     const codeOrbitRef = useRef<HTMLDivElement>(null);
@@ -298,8 +302,39 @@ export default function Footer() {
         className="bg-[#e8e6e2] text-gray-900 relative"
       >
         {/* Header Section */}
-        <div className="px-4 md:px-8 lg:px-16 py-4 border-b border-gray-500 relative">
-          <div className="max-w-7xl mx-auto">
+        <div className="px-4 md:px-8 lg:px-16 py-4 relative">
+
+          {/* Edge-to-edge underline - positioned right after nav */}
+          <div className="max-w-7xl mx-auto relative z-10">
+            {/* Large Brand Name */}
+            <div className="mt-4 md:mt-6 mb-0 relative">
+              <div ref={codeOrbitRef} className="font-bold text-gray-900 font-khand tracking-tight leading-none relative pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0, fontSize }}>
+                <div className="ml10 ml-2 md:ml-4 lg:ml-6 xl:ml-8 pt-2 md:pt-4 lg:pt-6">
+                  <span className="text-wrapper">
+                    <span className="letters">Code </span>
+                  </span>
+                </div>
+                <div className="flex justify-end -mt-12 sm:-mt-16 md:-mt-24 lg:-mt-32 xl:-mt-36 mr-2 md:mr-4 lg:mr-6 xl:mr-8 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0 }}>
+                  <div className="ml10 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0 }}>
+                    <span className="text-wrapper" style={{ marginBottom: 0, paddingBottom: 0 }}>
+                      <span className="letters">Orbit</span>
+                    </span>
+                  </div>
+                </div>
+                <img 
+                  src="/images/logo/logo1.png" 
+                  alt="Code Orbit Logo" 
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${logoSize} object-contain`}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Bottom Section */}
+        <div className="max-w-7xl mx-auto">
+            <div className="absolute left-0 right-0 border-b border-gray-500" style={{ top: 'calc(100% - 3rem)' }}></div>
+
             <nav className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 lg:gap-8 text-xs md:text-sm pb-2">
               {/* Left Navigation Links - Mobile with percentage spacing */}
               <div className="flex md:hidden items-center justify-between w-full pr-4">
@@ -347,17 +382,16 @@ export default function Footer() {
                 </a>
                 <a 
                   href="#contact" 
-                  className="text-gray-900 hover:text-gray-700 transition-colors"
+                  className="text-gray-900 hover:text-gray-700 transition-colors cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
-                    const target = document.getElementById('contact');
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (onGetQuoteClick) {
+                      onGetQuoteClick();
                     }
                   }}
                   style={{ width: '20%', textAlign: 'center' }}
                 >
-                  Contact
+                  Get a Quote
                 </a>
 
               </div>
@@ -405,16 +439,15 @@ export default function Footer() {
                 </a>
                 <a 
                   href="#contact" 
-                  className="text-gray-900 hover:text-gray-700 transition-colors"
+                  className="text-gray-900 hover:text-gray-700 transition-colors cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
-                    const target = document.getElementById('contact');
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (onGetQuoteClick) {
+                      onGetQuoteClick();
                     }
                   }}
                 >
-                  Contact
+                  Get a Quote
                 </a>
 
               </div>
@@ -433,94 +466,6 @@ export default function Footer() {
               </div>
             </nav>
           </div>
-          {/* Edge-to-edge underline - positioned right after nav */}
-          <div className="absolute left-0 right-0 border-b border-gray-500" style={{ bottom: 'calc(100% - 3rem)' }}></div>
-          <div className="max-w-7xl mx-auto relative z-10">
-            {/* Large Brand Name */}
-            <div className="mt-4 md:mt-6 mb-0 relative">
-              <div ref={codeOrbitRef} className="font-bold text-gray-900 font-khand tracking-tight leading-none relative pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0, fontSize }}>
-                <div className="ml10 ml-2 md:ml-4 lg:ml-6 xl:ml-8 pt-2 md:pt-4 lg:pt-6">
-                  <span className="text-wrapper">
-                    <span className="letters">Code </span>
-                  </span>
-                </div>
-                <div className="flex justify-end -mt-12 sm:-mt-16 md:-mt-24 lg:-mt-32 xl:-mt-36 mr-2 md:mr-4 lg:mr-6 xl:mr-8 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0 }}>
-                  <div className="ml10 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0 }}>
-                    <span className="text-wrapper" style={{ marginBottom: 0, paddingBottom: 0 }}>
-                      <span className="letters">Orbit</span>
-                    </span>
-                  </div>
-                </div>
-                <img 
-                  src="/images/logo/logo1.png" 
-                  alt="Code Orbit Logo" 
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${logoSize} object-contain`}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer Bottom Section */}
-        <div className="px-4 md:px-8 lg:px-16 pt-3 pb-4">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
-            {/* Left Section - Logo and Code Orbit - Hidden on mobile */}
-            <div className="hidden md:flex items-center gap-3 lg:gap-4">
-              {/* Logo - 9 squares pattern */}
-              <div className="grid grid-cols-3 gap-0.5">
-                {/* Row 1 */}
-                <div className="w-4 h-4 bg-gray-900"></div>
-                <div className="w-4 h-4"></div>
-                <div className="w-4 h-4 bg-gray-900"></div>
-                {/* Row 2 */}
-                <div className="w-4 h-4"></div>
-                <div className="w-4 h-4 bg-gray-900"></div>
-                <div className="w-4 h-4"></div>
-                {/* Row 3 */}
-                <div className="w-4 h-4 bg-gray-900"></div>
-                <div className="w-4 h-4"></div>
-                <div className="w-4 h-4 bg-gray-900"></div>
-              </div>
-            </div>
-
-            {/* Right Section - Description and Learn More on desktop, Contact Info on mobile */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-3 lg:gap-4 w-full md:w-auto">
-              {/* Mobile: Show contact info - Email, Instagram, Copyright on same line */}
-              <div className="flex md:hidden items-center justify-between text-xs w-full pr-4">
-                <a href="mailto:hello@codeorbit.com" className="text-gray-900 hover:text-gray-700 transition-colors" style={{ width: '25%' }}>
-                  hello@codeorbit.com
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-700 transition-colors" style={{ width: '15%', textAlign: 'right' }}>
-                  Instagram
-                </a>
-                <span className="text-gray-600" style={{ width: '60%', textAlign: 'right' }}>
-                  © Copyright Code Orbit {new Date().getFullYear()}
-                </span>
-              </div>
-              
-              {/* Desktop: Show description */}
-              <div className="hidden md:flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-3 lg:gap-4">
-                <p className="text-gray-500 text-xs max-w-md">
-                  Code Orbit is part of _____, an interdisciplinary communications company.
-                </p>
-                <a 
-                  href="#learn-more" 
-                  className="text-gray-900 hover:text-gray-700 transition-colors text-xs flex items-center gap-2 group whitespace-nowrap"
-                >
-                  Learn More
-                  <svg 
-                    className="w-3 h-3 group-hover:translate-x-1 transition-transform" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
         </footer>
       );
     }

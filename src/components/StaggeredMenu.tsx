@@ -461,6 +461,20 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                       onClick={(e) => {
                         e.preventDefault();
                         const targetId = it.link.replace('#', '');
+                        
+                        // Handle contact link specially - open modal instead of scrolling
+                        if (targetId === 'contact') {
+                          if ((window as any).openContactModal) {
+                            (window as any).openContactModal();
+                          }
+                          setTimeout(() => {
+                            if (openRef.current) {
+                              toggleMenu();
+                            }
+                          }, 300);
+                          return;
+                        }
+                        
                         const targetElement = document.getElementById(targetId);
                         if (targetElement) {
                           // Smooth scroll to target first
