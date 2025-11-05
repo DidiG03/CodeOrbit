@@ -74,7 +74,7 @@ export default function Hero({ onContactClick }: HeroProps = {}) {
       {/* Interactive Reveal Image */}
       <img
         ref={revealImgRef}
-        src="/images/cover-image.png"
+        src="/images/Cover-Image.png"
         alt="Reveal effect"
         style={{
           position: 'absolute',

@@ -154,7 +154,7 @@ export default function Services() {
             }}
           >
             <img
-              src="/images/cover-image-2.png"
+              src="/images/Cover-Image-2.png"
               alt="Background"
               className="w-full h-full object-cover rounded-xl"
               style={{

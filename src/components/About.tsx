@@ -281,7 +281,7 @@ export default function About() {
                     autoPlay
                     playsInline
                     preload="metadata"
-                    poster="/images/cover-image.png"
+                    poster="/images/Cover-Image.png"
                     onEnded={() => setIsVideoPlaying(false)}
                     onError={(e) => {
                       console.error('Video error:', e);
