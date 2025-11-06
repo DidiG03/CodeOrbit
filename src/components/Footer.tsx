@@ -301,41 +301,9 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
         ref={footerRef}
         className="bg-[#e8e6e2] text-gray-900 relative"
       >
-        {/* Header Section */}
-        <div className="px-4 md:px-8 lg:px-16 py-4 relative">
-
-          {/* Edge-to-edge underline - positioned right after nav */}
-          <div className="max-w-7xl mx-auto relative z-10">
-            {/* Large Brand Name */}
-            <div className="mt-4 md:mt-6 mb-0 relative">
-              <div ref={codeOrbitRef} className="font-bold text-gray-900 font-khand tracking-tight leading-none relative pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0, fontSize }}>
-                <div className="ml10 ml-2 md:ml-4 lg:ml-6 xl:ml-8 pt-2 md:pt-4 lg:pt-6">
-                  <span className="text-wrapper">
-                    <span className="letters">Code </span>
-                  </span>
-                </div>
-                <div className="flex justify-end -mt-12 sm:-mt-16 md:-mt-24 lg:-mt-32 xl:-mt-36 mr-2 md:mr-4 lg:mr-6 xl:mr-8 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0 }}>
-                  <div className="ml10 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0 }}>
-                    <span className="text-wrapper" style={{ marginBottom: 0, paddingBottom: 0 }}>
-                      <span className="letters">Orbit</span>
-                    </span>
-                  </div>
-                </div>
-                <img 
-                  src="/images/logo/logo1.png" 
-                  alt="Code Orbit Logo" 
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${logoSize} object-contain`}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer Bottom Section */}
-        <div className="max-w-7xl mx-auto">
-            <div className="absolute left-0 right-0 border-b border-gray-500" style={{ top: 'calc(100% - 3rem)' }}></div>
-
-            <nav className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 lg:gap-8 text-xs md:text-sm pb-2">
+        {/* Navigation Section - At the top */}
+        <div className="relative px-2 md:px-4 lg:px-8 pt-4 pb-4">
+          <nav className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 lg:gap-8 text-xs md:text-sm px-4 md:px-6 lg:px-8">
               {/* Left Navigation Links - Mobile with percentage spacing */}
               <div className="flex md:hidden items-center justify-between w-full pr-4">
                 <a 
@@ -353,20 +321,6 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   Home
                 </a>
                 <a 
-                  href="#services" 
-                  className="text-gray-900 hover:text-gray-700 transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const target = document.getElementById('services');
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                  style={{ width: '20%', textAlign: 'center' }}
-                >
-                  Services
-                </a>
-                <a 
                   href="#about" 
                   className="text-gray-900 hover:text-gray-700 transition-colors"
                   onClick={(e) => {
@@ -379,6 +333,20 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   style={{ width: '18%', textAlign: 'center' }}
                 >
                   About
+                </a>
+                <a 
+                  href="#services" 
+                  className="text-gray-900 hover:text-gray-700 transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const target = document.getElementById('services');
+                    if (target) {
+                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  style={{ width: '20%', textAlign: 'center' }}
+                >
+                  Services
                 </a>
                 <a 
                   href="#contact" 
@@ -412,19 +380,6 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   Home
                 </a>
                 <a 
-                  href="#services" 
-                  className="text-gray-900 hover:text-gray-700 transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const target = document.getElementById('services');
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                >
-                  Services
-                </a>
-                <a 
                   href="#about" 
                   className="text-gray-900 hover:text-gray-700 transition-colors"
                   onClick={(e) => {
@@ -436,6 +391,19 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   }}
                 >
                   About
+                </a>
+                <a 
+                  href="#services" 
+                  className="text-gray-900 hover:text-gray-700 transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const target = document.getElementById('services');
+                    if (target) {
+                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                >
+                  Services
                 </a>
                 <a 
                   href="#contact" 
@@ -464,9 +432,42 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   © Copyright Code Orbit {new Date().getFullYear()}
                 </span>
               </div>
-            </nav>
+          </nav>
+
+          {/* Border line right after navigation - full width */}
+          <div className="absolute left-0 right-0 border-b border-gray-500 mt-4"></div>
+        </div>
+
+        {/* Header Section */}
+        <div className="px-4 md:px-8 lg:px-16 py-4 relative">
+          {/* Edge-to-edge underline - positioned right after nav */}
+          <div className="max-w-7xl mx-auto relative z-10">
+            {/* Large Brand Name */}
+            <div className="mt-4 md:mt-6 mb-0 relative">
+              <div ref={codeOrbitRef} className="font-bold text-gray-900 font-khand tracking-tight leading-none relative pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0, fontSize }}>
+                <div className="ml10 ml-2 md:ml-4 lg:ml-6 xl:ml-8 pt-2 md:pt-4 lg:pt-6">
+                  <span className="text-wrapper">
+                    <span className="letters">Code </span>
+                  </span>
+                </div>
+                <div className="flex justify-end -mt-12 sm:-mt-16 md:-mt-24 lg:-mt-32 xl:-mt-36 mr-2 md:mr-4 lg:mr-6 xl:mr-8 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0 }}>
+                  <div className="ml10 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0 }}>
+                    <span className="text-wrapper" style={{ marginBottom: 0, paddingBottom: 0 }}>
+                      <span className="letters">Orbit</span>
+                    </span>
+                  </div>
+                </div>
+                <img 
+                  src="/images/logo/logo1.png" 
+                  alt="Code Orbit Logo" 
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${logoSize} object-contain`}
+                />
+              </div>
+            </div>
           </div>
-        </footer>
-      );
-    }
+        </div>
+
+      </footer>
+    );
+  }
 

@@ -192,9 +192,9 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
                 style={{ color: formData.projectType ? '#fff' : '#9ca3af' }}
               >
                 <option value="" className="bg-black text-gray-400">Project Type</option>
-                <option value="web" className="bg-black">Web Development</option>
-                <option value="mobile" className="bg-black">Mobile Application</option>
-                <option value="cloud" className="bg-black">Cloud Solutions</option>
+                <option value="web-solutions" className="bg-black">Web Solutions</option>
+                <option value="ai-solutions" className="bg-black">Tailored AI Solutions</option>
+                <option value="whatsapp-bot" className="bg-black">WhatsApp Bot</option>
                 <option value="consulting" className="bg-black">Digital Consulting</option>
                 <option value="other" className="bg-black">Other</option>
               </select>

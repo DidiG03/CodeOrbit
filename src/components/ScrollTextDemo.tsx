@@ -17,65 +17,128 @@ export default function ScrollTextDemo() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
+    const isMobile = window.innerWidth < 768;
     const ctx = gsap.context(() => {
-      // First line animation - animates first
-      if (line1Ref.current) {
-        gsap.set(line1Ref.current, {
-          '--bg-pos': '200%',
-          '--stroke-opacity': '0',
-        });
-
-        gsap.to(line1Ref.current, {
-          '--bg-pos': '100%',
-          '--stroke-opacity': '1',
-          ease: 'none',
+      if (isMobile) {
+        // Mobile: Smooth animations with delays, not tied to scroll
+        const timeline = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 80%',
-            end: 'top 40%',
-            scrub: true,
+            once: true,
           },
         });
-      }
 
-      // Second line animation - animates after first line completes
-      if (line2Ref.current) {
-        gsap.set(line2Ref.current, {
-          '--bg-pos': '200%',
-          '--stroke-opacity': '0',
-        });
+        if (line1Ref.current) {
+          gsap.set(line1Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
 
-        gsap.to(line2Ref.current, {
-          '--bg-pos': '100%',
-          '--stroke-opacity': '1',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 40%',
-            end: 'top 0%',
-            scrub: true,
-          },
-        });
-      }
+          timeline.to(line1Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            duration: 1.2,
+            ease: 'power2.out',
+          });
+        }
 
-      // Third line animation - animates after second line completes
-      if (line3Ref.current) {
-        gsap.set(line3Ref.current, {
-          '--bg-pos': '200%',
-          '--stroke-opacity': '0',
-        });
+        if (line2Ref.current) {
+          gsap.set(line2Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
 
-        gsap.to(line3Ref.current, {
-          '--bg-pos': '100%',
-          '--stroke-opacity': '1',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 0%',
-            end: 'top -40%',
-            scrub: true,
-          },
-        });
+          timeline.to(
+            line2Ref.current,
+            {
+              '--bg-pos': '100%',
+              '--stroke-opacity': '1',
+              duration: 1.2,
+              ease: 'power2.out',
+            },
+            '-=0.6' // Start 0.6s before previous ends
+          );
+        }
+
+        if (line3Ref.current) {
+          gsap.set(line3Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
+
+          timeline.to(
+            line3Ref.current,
+            {
+              '--bg-pos': '100%',
+              '--stroke-opacity': '1',
+              duration: 1.2,
+              ease: 'power2.out',
+            },
+            '-=0.6' // Start 0.6s before previous ends
+          );
+        }
+      } else {
+        // Desktop: Scroll-tied animations
+        // First line animation - animates first
+        if (line1Ref.current) {
+          gsap.set(line1Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
+
+          gsap.to(line1Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              end: 'top 40%',
+              scrub: true,
+            },
+          });
+        }
+
+        // Second line animation - animates after first line completes
+        if (line2Ref.current) {
+          gsap.set(line2Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
+
+          gsap.to(line2Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 40%',
+              end: 'top 0%',
+              scrub: true,
+            },
+          });
+        }
+
+        // Third line animation - animates after second line completes
+        if (line3Ref.current) {
+          gsap.set(line3Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
+
+          gsap.to(line3Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 0%',
+              end: 'top -40%',
+              scrub: true,
+            },
+          });
+        }
       }
     });
 

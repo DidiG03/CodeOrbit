@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -14,126 +14,181 @@ export default function About() {
   const heading2Ref = useRef<HTMLHeadingElement>(null);
   const span1Ref = useRef<HTMLSpanElement>(null);
   const span2Ref = useRef<HTMLSpanElement>(null);
-  const firstImageRef = useRef<HTMLImageElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
     if (!sectionRef.current) return;
 
+    const isMobile = window.innerWidth < 768;
     const ctx = gsap.context(() => {
-      // First heading animation
-      if (heading1Ref.current) {
-        gsap.set(heading1Ref.current, {
-          '--bg-pos': '200%',
-          '--stroke-opacity': '0',
-        });
-
-        gsap.to(heading1Ref.current, {
-          '--bg-pos': '100%',
-          '--stroke-opacity': '1',
-          ease: 'none',
+      if (isMobile) {
+        // Mobile: Smooth animations with delays
+        // First heading and span animation
+        const timeline1 = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'top -10%',
-            scrub: true,
+            start: 'top 80%',
+            once: true,
           },
         });
-      }
 
-      // First span (Our Expertise)
-      if (span1Ref.current) {
-        gsap.set(span1Ref.current, {
-          '--bg-pos': '200%',
-          '--stroke-opacity': '0',
-        });
+        if (heading1Ref.current) {
+          gsap.set(heading1Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
 
-        gsap.to(span1Ref.current, {
-          '--bg-pos': '100%',
-          '--stroke-opacity': '1',
-          ease: 'none',
+          timeline1.to(heading1Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            duration: 1.2,
+            ease: 'power2.out',
+          });
+        }
+
+        if (span1Ref.current) {
+          gsap.set(span1Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
+
+          timeline1.to(
+            span1Ref.current,
+            {
+              '--bg-pos': '100%',
+              '--stroke-opacity': '1',
+              duration: 1.2,
+              ease: 'power2.out',
+            },
+            '-=0.8' // Start 0.8s before previous ends
+          );
+        }
+
+        // Second heading and span animation
+        const timeline2 = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'top -10%',
-            scrub: true,
+            start: 'center 80%',
+            once: true,
           },
         });
-      }
 
-      // Second heading animation
-      if (heading2Ref.current) {
-        gsap.set(heading2Ref.current, {
-          '--bg-pos': '200%',
-          '--stroke-opacity': '0',
-        });
+        if (heading2Ref.current) {
+          gsap.set(heading2Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
 
-        gsap.to(heading2Ref.current, {
-          '--bg-pos': '100%',
-          '--stroke-opacity': '1',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'center bottom',
-            end: 'center -20%',
-            scrub: true,
-          },
-        });
-      }
+          timeline2.to(heading2Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            duration: 1.2,
+            ease: 'power2.out',
+          });
+        }
 
-      // Second span (Online Excellence)
-      if (span2Ref.current) {
-        gsap.set(span2Ref.current, {
-          '--bg-pos': '200%',
-          '--stroke-opacity': '0',
-        });
+        if (span2Ref.current) {
+          gsap.set(span2Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
 
-        gsap.to(span2Ref.current, {
-          '--bg-pos': '100%',
-          '--stroke-opacity': '1',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'center bottom',
-            end: 'center -20%',
-            scrub: true,
-          },
-        });
-      }
+          timeline2.to(
+            span2Ref.current,
+            {
+              '--bg-pos': '100%',
+              '--stroke-opacity': '1',
+              duration: 1.2,
+              ease: 'power2.out',
+            },
+            '-=0.8' // Start 0.8s before previous ends
+          );
+        }
+      } else {
+        // Desktop: Scroll-tied animations
+        // First heading animation
+        if (heading1Ref.current) {
+          gsap.set(heading1Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
 
-      // First image expansion animation
-      if (firstImageRef.current) {
-        gsap.set(firstImageRef.current, {
-          scale: 0.2,
-          opacity: 0,
-        });
+          gsap.to(heading1Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top bottom',
+              end: 'top -10%',
+              scrub: true,
+            },
+          });
+        }
 
-        gsap.to(firstImageRef.current, {
-          scale: 1,
-          opacity: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: firstImageRef.current,
-            start: 'top 90%',
-            end: 'top 30%',
-            scrub: true,
-          },
-        });
+        // First span (Our Expertise)
+        if (span1Ref.current) {
+          gsap.set(span1Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
+
+          gsap.to(span1Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top bottom',
+              end: 'top -10%',
+              scrub: true,
+            },
+          });
+        }
+
+        // Second heading animation
+        if (heading2Ref.current) {
+          gsap.set(heading2Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
+
+          gsap.to(heading2Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'center bottom',
+              end: 'center -20%',
+              scrub: true,
+            },
+          });
+        }
+
+        // Second span (Online Excellence)
+        if (span2Ref.current) {
+          gsap.set(span2Ref.current, {
+            '--bg-pos': '200%',
+            '--stroke-opacity': '0',
+          });
+
+          gsap.to(span2Ref.current, {
+            '--bg-pos': '100%',
+            '--stroke-opacity': '1',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'center bottom',
+              end: 'center -20%',
+              scrub: true,
+            },
+          });
+        }
       }
     });
 
     return () => ctx.revert();
   }, []);
-
-  const handlePlayVideo = () => {
-    setIsVideoPlaying(true);
-    if (videoRef.current) {
-      videoRef.current.play().catch((error) => {
-        console.error('Error playing video:', error);
-      });
-    }
-  };
 
   return (
     <section ref={sectionRef} id="about" className="py-20 pb-40 about-scroll-section" style={{ backgroundColor: '#000000' }}>
@@ -167,7 +222,7 @@ export default function About() {
         </div>
 
         {/* Bottom Section */}
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left Side - Large Team Image */}
           <div className="relative overflow-hidden rounded-2xl">
             {/* Fade overlay on edges */}
@@ -178,16 +233,15 @@ export default function About() {
               }}
             />
             <img 
-              ref={firstImageRef}
               src="/images/frame4.jpg" 
               alt="Our Team" 
               className="w-full h-full rounded-2xl object-cover relative"
-              style={{ minHeight: '400px', transformOrigin: 'center center' }}
+              style={{ minHeight: '400px' }}
             />
           </div>
 
           {/* Right Side - Content */}
-          <div className="space-y-8 mt-12">
+          <div className="space-y-8">
             {/* Description */}
             <p className="text-lg text-white/70 leading-relaxed">
               We are a team of passionate developers, designers, and innovators dedicated to 
@@ -251,88 +305,50 @@ export default function About() {
             </p>            
           </div>
 
-          {/* Right Column - Interactive Image/Video */}
+          {/* Right Column - Image */}
           <div className="relative group">
             <div className="relative w-full h-full">
-              {/* Main Image - shown when video is not playing */}
-              {!isVideoPlaying && (
-                <img 
-                  src="/images/Cover-Image.png" 
-                  alt="Team Collaboration" 
-                  className="w-full h-full rounded-2xl object-cover transition-all duration-300"
-                  style={{ minHeight: '400px' }}
-                />
-              )}
+              <img 
+                src="/images/Cover-Image.png" 
+                alt="Team Collaboration" 
+                className="w-full h-full rounded-2xl object-cover transition-all duration-300"
+                style={{ minHeight: '400px' }}
+              />
               
-              {/* Video - shown when playing */}
-              {isVideoPlaying && (
-                <div className="relative w-full h-full rounded-2xl overflow-hidden" style={{ minHeight: '400px', backgroundColor: '#000' }}>
-                  <video
-                    ref={videoRef}
-                    className="w-full h-full rounded-2xl object-cover"
-                    style={{ 
-                      minHeight: '400px',
-                      width: '100%',
-                      height: '100%',
-                      display: 'block',
-                      backgroundColor: '#000'
-                    }}
-                    controls
-                    autoPlay
-                    playsInline
-                    preload="metadata"
-                    poster="/images/Cover-Image.png"
-                    onEnded={() => setIsVideoPlaying(false)}
-                    onError={(e) => {
-                      console.error('Video error:', e);
-                      setIsVideoPlaying(false);
-                      alert('Video playback error. Please ensure the video file (1104.mp4) exists in the public folder and is in MP4 format with H.264 codec.');
-                    }}
-                    onLoadedMetadata={() => {
-                      if (videoRef.current) {
-                        console.log('Video dimensions:', videoRef.current.videoWidth, 'x', videoRef.current.videoHeight);
-                      }
-                    }}
-                  >
-                    <source src="/1104.mp4" type="video/mp4" />
-                    <source src="/1104(1).mov" type="video/quicktime" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              )}
-              
-              {/* Interactive Button with Rotating Text - only show when video is not playing */}
-              {!isVideoPlaying && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-                  <svg 
-                    className="w-32 h-32 md:w-48 md:h-48 pointer-events-none"
-                    viewBox="0 0 192 192"
-                    style={{ 
-                      animation: 'spin 20s linear infinite',
-                      transformOrigin: '96px 96px'
-                    }}
-                  >
-                    <defs>
-                      <path id="circle" d="M 96,96 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
-                    </defs>
-                    <text fontSize="11" fill="white" opacity="0.8">
-                      <textPath href="#circle" startOffset="0%">
-                        Get In Touch · Get In Touch · Get In Touch · 
-                      </textPath>
-                    </text>
-                  </svg>
-                  <button 
-                    onClick={handlePlayVideo}
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-[#6366F1] rounded-full flex items-center justify-center hover:bg-[#4F46E5] transition-colors shadow-lg pointer-events-auto"
-                    aria-label="Play video"
-                    title="Play video"
-                  >
-                    <svg className="w-4 h-4 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.5 12L8 6.5v11L17.5 12z" />
-                    </svg>
-                  </button>
-                </div>
-              )}
+              {/* Rotating Text Overlay - positioned with percentages */}
+              <div 
+                className="absolute pointer-events-none"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '30%',
+                  height: '30%',
+                  minWidth: '120px',
+                  minHeight: '120px',
+                  maxWidth: '192px',
+                  maxHeight: '192px',
+                }}
+              >
+                <svg 
+                  className="w-full h-full pointer-events-none"
+                  viewBox="0 0 192 192"
+                  preserveAspectRatio="xMidYMid meet"
+                  style={{ 
+                    animation: 'spin 20s linear infinite',
+                    transformOrigin: '50% 50%'
+                  }}
+                >
+                  <defs>
+                    <path id="circle" d="M 96,96 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
+                  </defs>
+                  <text fontSize="11" fill="white" opacity="0.8">
+                    <textPath href="#circle" startOffset="0%">
+                      Get In Touch · Get In Touch · Get In Touch · 
+                    </textPath>
+                  </text>
+                </svg>
+              </div>
             </div>
           </div>
         </div>

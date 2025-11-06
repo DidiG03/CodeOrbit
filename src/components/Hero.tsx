@@ -18,8 +18,8 @@ export default function Hero({ onContactClick }: HeroProps = {}) {
 
   const menuItems = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '#hero' },
-    { label: 'Services', ariaLabel: 'View our services', link: '#services' },
     { label: 'About', ariaLabel: 'Learn about us', link: '#about' },
+    { label: 'Services', ariaLabel: 'View our services', link: '#services' },
     { label: 'Get a Quote', ariaLabel: 'Get a quote', link: '#contact' }
   ];
 
