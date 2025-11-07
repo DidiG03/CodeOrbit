@@ -237,6 +237,7 @@ export default function About() {
               alt="Our Team" 
               className="w-full h-full rounded-2xl object-cover relative"
               style={{ minHeight: '400px' }}
+              loading="lazy"
             />
           </div>
 
@@ -313,6 +314,7 @@ export default function About() {
                 alt="Team Collaboration" 
                 className="w-full h-full rounded-2xl object-cover transition-all duration-300"
                 style={{ minHeight: '400px' }}
+                loading="lazy"
               />
               
               {/* Rotating Text Overlay - positioned with percentages */}

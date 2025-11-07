@@ -47,10 +47,32 @@ export default function Services() {
   useEffect(() => {
     // Calculate total height needed for 5 sections (Our Services + 4 service slides)
     // Our Services slide is 150vh, others are 100vh each
-    const totalHeight = window.innerHeight * 5.5; // 1.5vh (Our Services) + 4vh (4 service slides)
+    // Use requestAnimationFrame to batch DOM operations and avoid forced reflow
+    const updateHeight = () => {
+      const totalHeight = window.innerHeight * 5.5; // 1.5vh (Our Services) + 4vh (4 service slides)
+      if (containerRef.current) {
+        // Batch DOM write in RAF to avoid forced reflow
+        requestAnimationFrame(() => {
+          if (containerRef.current) {
+            containerRef.current.style.height = `${totalHeight}px`;
+          }
+        });
+      }
+    };
+    
+    updateHeight();
+    // Use ResizeObserver instead of window resize for better performance
+    const resizeObserver = new ResizeObserver(() => {
+      updateHeight();
+    });
+    
     if (containerRef.current) {
-      containerRef.current.style.height = `${totalHeight}px`;
+      resizeObserver.observe(containerRef.current);
     }
+    
+    return () => {
+      resizeObserver.disconnect();
+    };
   }, []);
 
   return (
@@ -91,6 +113,7 @@ export default function Services() {
               style={{
                 filter: 'brightness(0.7) blur(0.5px)',
               }}
+              loading="lazy"
             />
           </div>
 
@@ -114,6 +137,7 @@ export default function Services() {
               style={{
                 filter: 'brightness(0.7) blur(0.5px)',
               }}
+              loading="lazy"
             />
           </div>
 
@@ -137,6 +161,7 @@ export default function Services() {
               style={{
                 filter: 'brightness(0.7) blur(0.5px)',
               }}
+              loading="lazy"
             />
           </div>
 
@@ -160,6 +185,7 @@ export default function Services() {
               style={{
                 filter: 'brightness(0.7) blur(0.5px)',
               }}
+              loading="lazy"
             />
           </div>
 
@@ -303,6 +329,7 @@ export default function Services() {
                             boxShadow: '0 15px 40px rgba(255, 255, 255, 0.15)',
                             border: '2px solid rgba(255, 255, 255, 0.1)',
                           }}
+                          loading="lazy"
                         />
                       </div>
                     )}
@@ -335,6 +362,7 @@ export default function Services() {
                             filter: 'brightness(0.85) contrast(1.1)',
                             boxShadow: '0 8px 20px rgba(255, 255, 255, 0.1)',
                           }}
+                          loading="lazy"
                         />
                       </div>
                     )}
@@ -369,6 +397,7 @@ export default function Services() {
                             boxShadow: '0 15px 40px rgba(255, 255, 255, 0.15)',
                             border: '2px solid rgba(255, 255, 255, 0.1)',
                           }}
+                          loading="lazy"
                         />
                       </div>
                     )}

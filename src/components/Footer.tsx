@@ -14,7 +14,6 @@ type FooterProps = {
 
 export default function Footer({ onGetQuoteClick }: FooterProps) {
     const footerRef = useRef<HTMLElement>(null);
-    const [hasScrolled, setHasScrolled] = useState(false);
     const codeOrbitRef = useRef<HTMLDivElement>(null);
     const animationRef = useRef<gsap.core.Timeline | null>(null);
     const [fontSize, setFontSize] = useState('clamp(8rem, 20vw, 30rem)');
@@ -22,96 +21,63 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
 
     // Handle responsive font size for screens below 1080px
     useEffect(() => {
+      let rafId: number | null = null;
+      
       const updateFontSize = () => {
-        if (window.innerWidth < 1080) {
-          // Use a small percentage of viewport width for screens below 1080px
-          // Calculate based on screen width to ensure it fits properly
-          const width = window.innerWidth;
-          if (width <= 400) {
-            // Very small mobile screens (400px and less)
-            setFontSize('clamp(5.5rem, 16vw, 9rem)');
-            setLogoSize('w-11 h-11');
-          } else if (width < 480) {
-            // Very small mobile screens
-            setFontSize('clamp(6rem, 18vw, 10rem)');
-            setLogoSize('w-12 h-12');
-          } else if (width < 768) {
-            // Small tablets and large phones
-            setFontSize('clamp(7rem, 22vw, 14rem)');
-            setLogoSize('w-16 h-16');
-          } else {
-            // Medium tablets and small laptops
-            setFontSize('clamp(8rem, 25vw, 18rem)');
-            setLogoSize('w-20 h-20');
-          }
-        } else {
-          setFontSize('clamp(8rem, 20vw, 30rem)');
-          setLogoSize('sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48');
+        // Use requestAnimationFrame to batch DOM reads and avoid forced reflow
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
         }
+        
+        rafId = requestAnimationFrame(() => {
+          const width = window.innerWidth;
+          
+          if (width < 1080) {
+            // Use a small percentage of viewport width for screens below 1080px
+            // Calculate based on screen width to ensure it fits properly
+            if (width <= 400) {
+              // Very small mobile screens (400px and less)
+              setFontSize('clamp(5.5rem, 16vw, 9rem)');
+              setLogoSize('w-11 h-11');
+            } else if (width < 480) {
+              // Very small mobile screens
+              setFontSize('clamp(6rem, 18vw, 10rem)');
+              setLogoSize('w-12 h-12');
+            } else if (width < 768) {
+              // Small tablets and large phones
+              setFontSize('clamp(7rem, 22vw, 14rem)');
+              setLogoSize('w-16 h-16');
+            } else {
+              // Medium tablets and small laptops
+              setFontSize('clamp(8rem, 25vw, 18rem)');
+              setLogoSize('w-20 h-20');
+            }
+          } else {
+            setFontSize('clamp(8rem, 20vw, 30rem)');
+            setLogoSize('sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48');
+          }
+          
+          rafId = null;
+        });
       };
 
       updateFontSize();
-      window.addEventListener('resize', updateFontSize);
+      
+      // Use ResizeObserver for better performance than window resize
+      const resizeObserver = new ResizeObserver(() => {
+        updateFontSize();
+      });
+      
+      resizeObserver.observe(document.documentElement);
 
       return () => {
-        window.removeEventListener('resize', updateFontSize);
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+        }
+        resizeObserver.disconnect();
       };
     }, []);
 
-    useEffect(() => {
-      const footer = footerRef.current;
-      if (!footer) return;
-
-      let lastScrollY = window.scrollY;
-      let isScrolling = false;
-
-      const handleScroll = () => {
-        if (isScrolling) return;
-
-        const currentScrollY = window.scrollY;
-        const footerTop = footer.offsetTop;
-        const windowHeight = window.innerHeight;
-        const scrollPosition = currentScrollY + windowHeight;
-
-        // Reset hasScrolled if scrolling back up past footer
-        if (currentScrollY < lastScrollY && currentScrollY + windowHeight < footerTop - 400) {
-          setHasScrolled(false);
-        }
-
-        // Check if we're scrolling down and near the footer (within 300px)
-        if (
-          currentScrollY > lastScrollY &&
-          scrollPosition >= footerTop - 300 &&
-          !hasScrolled &&
-          !isScrolling
-        ) {
-          isScrolling = true;
-          setHasScrolled(true);
-
-          // Smoothly scroll to the bottom of the footer
-          const footerBottom = footer.offsetTop + footer.offsetHeight;
-          const targetScroll = footerBottom - windowHeight;
-
-          window.scrollTo({
-            top: targetScroll,
-            behavior: 'smooth'
-          });
-
-          // Reset isScrolling after animation completes (approximately 1 second)
-          setTimeout(() => {
-            isScrolling = false;
-          }, 1000);
-        }
-
-        lastScrollY = currentScrollY;
-      };
-
-      window.addEventListener('scroll', handleScroll, { passive: true });
-
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, [hasScrolled]);
 
     // Animation for Code Orbit letters - exactly like anime.js example
     useEffect(() => {
@@ -157,8 +123,11 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
       
       // Calculate the starting position for each letter
       // Each letter needs to start to the left of the entire word
+      // Batch DOM reads first, then writes to avoid forced reflow
+      const letterPositions: Array<{ element: HTMLElement; x: number }> = [];
+      
       letterWrappers.forEach((wrapper, index) => {
-        // Get the cumulative width of all previous wrappers
+        // Get the cumulative width of all previous wrappers (batch reads)
         let leftOffset = 0;
         for (let i = 0; i < index; i++) {
           const prevWrapper = letterWrappers[i] as HTMLElement;
@@ -166,9 +135,19 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
         }
         // Each letter starts far to the left (negative position relative to word start)
         const startX = -leftOffset - 100;
-        gsap.set(wrapper.querySelector('.letter') as HTMLElement, { 
-          x: startX,
-          position: 'relative'
+        const letterElement = wrapper.querySelector('.letter') as HTMLElement;
+        if (letterElement) {
+          letterPositions.push({ element: letterElement, x: startX });
+        }
+      });
+      
+      // Batch all DOM writes in a single RAF to avoid forced reflow
+      requestAnimationFrame(() => {
+        letterPositions.forEach(({ element, x }) => {
+          gsap.set(element, { 
+            x: x,
+            position: 'relative'
+          });
         });
       });
       

@@ -292,6 +292,8 @@ export const LaserFlow: React.FC<Props> = React.memo(({
   const inViewRef = useRef<boolean>(true);
   const animationIdRef = useRef<number | null>(null);
   const isInitializedRef = useRef<boolean>(false);
+  const lastFrameTimeRef = useRef<number>(0);
+  const frameSkipRef = useRef<number>(0);
 
   const hexToRGB = (hex: string) => {
     let c = hex.trim();
@@ -451,11 +453,35 @@ export const LaserFlow: React.FC<Props> = React.memo(({
     canvas.addEventListener('webglcontextrestored', onCtxRestored, false);
 
     let raf = 0;
+    const TARGET_FPS = 60;
+    const FRAME_TIME = 1000 / TARGET_FPS; // ~16.67ms per frame
 
-    const animate = () => {
+    const animate = (currentTime: number) => {
       raf = requestAnimationFrame(animate); // Always schedule next frame first
       
-      if (pausedRef.current || !inViewRef.current) return;
+      // Early exit if paused or not in view
+      if (pausedRef.current || !inViewRef.current) {
+        lastFrameTimeRef.current = currentTime;
+        return;
+      }
+
+      // Frame rate limiting - skip frames if we're behind
+      const deltaTime = currentTime - lastFrameTimeRef.current;
+      if (deltaTime < FRAME_TIME) {
+        return; // Skip this frame to maintain target FPS
+      }
+      
+      // If frame took too long, skip a frame to catch up
+      if (deltaTime > FRAME_TIME * 2) {
+        frameSkipRef.current++;
+        if (frameSkipRef.current < 2) {
+          lastFrameTimeRef.current = currentTime;
+          return;
+        }
+        frameSkipRef.current = 0;
+      }
+      
+      lastFrameTimeRef.current = currentTime;
 
       const t = clock.getElapsedTime();
       const dt = Math.max(0, t - prevTime);
@@ -486,8 +512,11 @@ export const LaserFlow: React.FC<Props> = React.memo(({
       renderer.render(scene, camera);
     };
 
-    // Start animation immediately
-    animate();
+    // Initialize frame timing
+    lastFrameTimeRef.current = performance.now();
+    
+    // Start animation - requestAnimationFrame will provide timestamp
+    raf = requestAnimationFrame(animate);
 
     return () => {
       if (raf) cancelAnimationFrame(raf);

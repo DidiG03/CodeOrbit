@@ -76,6 +76,8 @@ export default function Hero({ onContactClick }: HeroProps = {}) {
         ref={revealImgRef}
         src="/images/Cover-Image.png"
         alt="Reveal effect"
+        fetchPriority="high"
+        loading="eager"
         style={{
           position: 'absolute',
           width: '100%',
