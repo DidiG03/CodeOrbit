@@ -232,16 +232,6 @@ export default function About() {
                 background: 'radial-gradient(circle at center, transparent 0%, transparent 60%, rgba(0,0,0,0.3) 80%, rgba(0,0,0,0.6) 100%)',
               }}
             />
-<<<<<<< Updated upstream
-            <img 
-              src="/images/frame4.jpg" 
-              alt="Our Team" 
-              className="w-full h-full rounded-2xl object-cover relative"
-              style={{ minHeight: '400px' }}
-              loading="lazy"
-            />
-=======
->>>>>>> Stashed changes
 
           </div>
 
