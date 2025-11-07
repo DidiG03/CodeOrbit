@@ -239,6 +239,7 @@ export default function About() {
               style={{ minHeight: '400px' }}
               loading="lazy"
             />
+
           </div>
 
           {/* Right Side - Content */}
