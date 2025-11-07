@@ -18,45 +18,67 @@ export default function Services() {
       title: 'Web Solutions',
       description: 'Transform your business with cutting-edge web solutions and modern technologies that scale with your growth',
       images: ['/images/img5.png', '/images/frame2.jpg'],
-      bgColor: '#000000',
+      bgColor: '#0f0f0f',
+      textColor: '#fff',
+    },
+    {
+      title: 'Automated WhatsApp Bot',
+      description: 'We are happy to introduce you to our latest innovation, a custom AI Whatsapp Bot that can help you automate your business processes and improve your customer service.',
+      images: ['/images/Whatsappbot1.png'],
+      bgColor: '#0a0a15',
       textColor: '#fff',
     },
     {
       title: 'Tailored AI Solutions',
       description: 'Custom AI solutions tailored to your business needs, delivering seamless user experiences',
       images: ['/images/frame3.png'],
-      bgColor: '#0a0a1a',
-      textColor: '#fff',
-    },
-    {
-      title: 'Meet Code Orbit Latest Inovation',
-      description: 'We are happy to introduce you to our latest innovation, a custom AI Whatsapp Bot that can help you automate your business processes and improve your customer service.',
-      images: ['/images/frame4.jpg', '/images/frame5.jpg'],
-      bgColor: '#1a0a2e',
+      bgColor: '#000000',
       textColor: '#fff',
     },
     {
       title: 'Digital Consulting',
       description: 'End-to-end solutions tailored to your business needs and goals, driving innovation and growth',
       images: ['/images/consulting.png'],
-      bgColor: '#000000',
+      bgColor: '#0f0f0f',
       textColor: '#fff',
     },
   ];
 
   useEffect(() => {
     // Calculate total height needed for 5 sections (Our Services + 4 service slides)
-    // Our Services slide is 150vh, others are 100vh each
-    const totalHeight = window.innerHeight * 5.5; // 1.5vh (Our Services) + 4vh (4 service slides)
+    // Our Services slide is 150vh, first 3 slides are 100vh each, last slide (Digital Consulting) is 250vh
+    // Use requestAnimationFrame to batch DOM operations and avoid forced reflow
+    const updateHeight = () => {
+      const totalHeight = window.innerHeight * 7; // 1.5vh (Our Services) + 3vh (3 service slides) + 2.5vh (Digital Consulting - longer) = 7vh total
+      if (containerRef.current) {
+        // Batch DOM write in RAF to avoid forced reflow
+        requestAnimationFrame(() => {
+          if (containerRef.current) {
+            containerRef.current.style.height = `${totalHeight}px`;
+          }
+        });
+      }
+    };
+    
+    updateHeight();
+    // Use ResizeObserver instead of window resize for better performance
+    const resizeObserver = new ResizeObserver(() => {
+      updateHeight();
+    });
+    
     if (containerRef.current) {
-      containerRef.current.style.height = `${totalHeight}px`;
+      resizeObserver.observe(containerRef.current);
     }
+    
+    return () => {
+      resizeObserver.disconnect();
+    };
   }, []);
 
   return (
     <>
       {/* Parallax Sections Container */}
-      <div ref={containerRef} className="services-parallax-container relative">
+      <div ref={containerRef} id="services" className="services-parallax-container relative">
         {/* Our Services Title Slide */}
         <div
           className="section-parallax"
@@ -77,8 +99,8 @@ export default function Services() {
               position: 'absolute',
               top: '10%',
               left: '8%',
-              width: '500px',
-              height: '300px',
+              width: '25%',
+              aspectRatio: '35 / 23',
               zIndex: 1,
               transform: 'rotate(-8deg)',
               opacity: 0.6,
@@ -91,6 +113,7 @@ export default function Services() {
               style={{
                 filter: 'brightness(0.7) blur(0.5px)',
               }}
+              loading="lazy"
             />
           </div>
 
@@ -99,21 +122,22 @@ export default function Services() {
             style={{
               position: 'absolute',
               top: '12%',
-              right: '6%',
-              width: '450px',
-              height: '300px',
+              right: '9%',
+              width: '35%',
+              aspectRatio: '35 / 20',
               zIndex: 1,
               transform: 'rotate(18deg)',
               opacity: 0.55,
             }}
           >
             <img
-              src="/images/frame2.jpg"
+              src="/images/Cover-Image-2.png"
               alt="Background"
               className="w-full h-full object-cover rounded-xl"
               style={{
                 filter: 'brightness(0.7) blur(0.5px)',
               }}
+              loading="lazy"
             />
           </div>
 
@@ -121,10 +145,10 @@ export default function Services() {
           <div
             style={{
               position: 'absolute',
-              bottom: '10%',
+              bottom: '20%',
               left: '6%',
-              width: '420px',
-              height: '280px',
+              width: '30%',
+              aspectRatio: '28 / 18',
               zIndex: 1,
               transform: 'rotate(-22deg)',
               opacity: 0.6,
@@ -137,6 +161,7 @@ export default function Services() {
               style={{
                 filter: 'brightness(0.7) blur(0.5px)',
               }}
+              loading="lazy"
             />
           </div>
 
@@ -146,20 +171,21 @@ export default function Services() {
               position: 'absolute',
               bottom: '12%',
               right: '8%',
-              width: '300px',
-              height: '400px',
+              width: '18%',
+              aspectRatio: '18 / 26',
               zIndex: 1,
-              transform: 'rotate(15deg)',
+              transform: 'rotate(12deg)',
               opacity: 0.55,
             }}
           >
             <img
-              src="/images/Cover-Image-2.png"
+              src="/images/frame2.jpg"
               alt="Background"
               className="w-full h-full object-cover rounded-xl"
               style={{
                 filter: 'brightness(0.7) blur(0.5px)',
               }}
+              loading="lazy"
             />
           </div>
 
@@ -237,12 +263,19 @@ export default function Services() {
           const isFirst = index === 0;
           const isLast = index === services.length - 1;
           
+          // Calculate top position: each slide is 100vh apart, starting after "Our Services" (150vh)
+          const topPosition = 150 + (index * 100);
+          
+          // Last slide (Digital Consulting) is 250vh tall, others are 100vh
+          const slideHeight = isLast ? '250vh' : '100vh';
+          
           return (
             <div
               key={`service-slide-${index}`}
               className="section-parallax"
               style={{
-                top: `${150 + (index * 100)}vh`,
+                top: `${topPosition}vh`,
+                height: slideHeight,
                 backgroundColor: service.bgColor,
                 color: service.textColor || '#fff',
                 zIndex: 1000 + index + 1,
@@ -252,16 +285,24 @@ export default function Services() {
               {/* Full screen background image for slide 3 (index 2) */}
               {index === 2 && service.images && service.images.length > 0 && (
                 <div
-                  className="absolute inset-0 w-full h-full"
+                  className="absolute inset-0 w-full h-full flex items-center justify-center"
                   style={{
-                    backgroundImage: `url(${service.images[0]})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    opacity: 0.2,
-                    zIndex: 1,
+                    zIndex: 0,
                   }}
-                />
+                >
+                  <div
+                    className="w-full h-full"
+                    style={{
+                      backgroundImage: `url(${service.images[0]})`,
+                      backgroundSize: 'contain',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat',
+                      opacity: 0.5,
+                      width: 'clamp(60%, 80vw, 80%)',
+                      height: 'clamp(60%, 80vh, 80%)',
+                    }}
+                  />
+                </div>
               )}
               
               <div className="fixed-content" style={{ maxWidth: '1400px', width: '90%' }}>
@@ -281,49 +322,7 @@ export default function Services() {
                       >
                         {service.description}
                       </p>
-                      <div className="flex justify-center mt-6">
-                        <button className="btn" style={{ overflow: 'hidden', position: 'relative' }}>
-                        <svg
-                          className="btn-svg"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z" />
-                        </svg>
-                        <div className="txt-wrapper" style={{ overflow: 'hidden', width: '7.5em', flexShrink: 0 }}>
-                          <span className="txt-1">
-                            {Array.from("Know More").map((char, index) => (
-                              <span key={index} className="btn-letter">
-                                {char === " " ? "\u00A0" : char}
-                              </span>
-                            ))}
-                          </span>
-                        </div>
-                      </button>
-                      </div>
                     </div>
-                    {service.images && service.images.length > 0 && (
-                      <div className="lg:col-span-5 order-1 lg:order-2">
-                        <img
-                          src={service.images[0]}
-                          alt={service.title}
-                          className="w-full h-auto rounded-xl"
-                          style={{
-                            maxHeight: '400px',
-                            objectFit: 'cover',
-                            filter: 'brightness(0.9) contrast(1.05)',
-                            boxShadow: '0 15px 40px rgba(99, 102, 241, 0.3)',
-                            border: '2px solid rgba(99, 102, 241, 0.2)',
-                          }}
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Unique Layout for Slide 1 - Image on left, content on right */}
-                {index === 1 && (
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     {service.images && service.images.length > 0 && (
                       <div className="lg:col-span-5">
                         <img
@@ -331,75 +330,61 @@ export default function Services() {
                           alt={service.title}
                           className="w-full h-auto rounded-xl"
                           style={{
-                            maxHeight: '450px',
+                            maxHeight: '40vh',
                             objectFit: 'cover',
-                            filter: 'brightness(0.85) contrast(1.1)',
-                            boxShadow: '0 15px 40px rgba(139, 92, 246, 0.3)',
-                            border: '2px solid rgba(139, 92, 246, 0.2)',
+                            filter: 'brightness(0.9) contrast(1.05)',
+                            boxShadow: '0 15px 40px rgba(255, 255, 255, 0.15)',
+                            border: '2px solid rgba(255, 255, 255, 0.1)',
                           }}
+                          loading="lazy"
                         />
                       </div>
                     )}
-                    <div className="lg:col-span-7 flex flex-col justify-center">
+                  </div>
+                )}
+
+                {/* Unique Layout for Slide 1 - Image on right, content on left */}
+                {index === 1 && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div className="lg:col-span-7 order-2 lg:order-1">
                       <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
                         {service.title}
                       </h1>
                       <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                         {service.description}
                       </p>
-                      <div className="flex justify-center mt-6">
-                        <button className="btn" style={{ overflow: 'hidden', position: 'relative' }}>
-                          <svg
-                            className="btn-svg"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z" />
-                          </svg>
-                          <div className="txt-wrapper" style={{ overflow: 'hidden', width: '7.5em', flexShrink: 0 }}>
-                            <span className="txt-1">
-                              {Array.from("Know More").map((char, charIndex) => (
-                                <span key={charIndex} className="btn-letter">
-                                  {char === " " ? "\u00A0" : char}
-                                </span>
-                              ))}
-                            </span>
-                          </div>
-                        </button>
-                      </div>
                     </div>
+                    {service.images && service.images.length > 0 && (
+                      <div className="lg:col-span-5 order-1 lg:order-2" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <img
+                          src={service.images[0]}
+                          alt={service.title}
+                          className="rounded-xl"
+                          style={{
+                            width: '90%',
+                            height: '90%',
+                            maxWidth: '90%',
+                            maxHeight: '90%',
+                            objectFit: 'contain',
+                            filter: 'brightness(0.85) contrast(1.1)',
+                            boxShadow: '0 8px 20px rgba(255, 255, 255, 0.1)',
+                          }}
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
 
-                {/* Unique Layout for Slide 2 - Full screen background, text centered only */}
+                {/* Unique Layout for Slide 2 - Background image behind, content in front */}
                 {index === 2 && (
-                  <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
+                  <div className="relative text-center max-w-4xl mx-auto px-6" style={{ zIndex: 10 }}>
                     <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
                       {service.title}
                     </h1>
                     <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                       {service.description}
                     </p>
-                    <div className="flex justify-center mt-6">
-                      <button className="btn" style={{ overflow: 'hidden', position: 'relative' }}>
-                        <svg
-                          className="btn-svg"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z" />
-                        </svg>
-                        <div className="txt-wrapper" style={{ overflow: 'hidden', width: '7.5em', flexShrink: 0 }}>
-                          <span className="txt-1">
-                            {Array.from("Know More").map((char, charIndex) => (
-                              <span key={charIndex} className="btn-letter">
-                                {char === " " ? "\u00A0" : char}
-                              </span>
-                            ))}
-                          </span>
-                        </div>
-                      </button>
-                    </div>
                   </div>
                 )}
 
@@ -413,12 +398,13 @@ export default function Services() {
                           alt={service.title}
                           className="w-full h-auto rounded-xl"
                           style={{
-                            maxHeight: '450px',
+                            maxHeight: '45vh',
                             objectFit: 'cover',
                             filter: 'brightness(0.85) contrast(1.1)',
-                            boxShadow: '0 15px 40px rgba(99, 102, 241, 0.3)',
-                            border: '2px solid rgba(99, 102, 241, 0.2)',
+                            boxShadow: '0 15px 40px rgba(255, 255, 255, 0.15)',
+                            border: '2px solid rgba(255, 255, 255, 0.1)',
                           }}
+                          loading="lazy"
                         />
                       </div>
                     )}
@@ -429,26 +415,6 @@ export default function Services() {
                       <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                         {service.description}
                       </p>
-                      <div className="flex justify-center mt-6">
-                        <button className="btn" style={{ overflow: 'hidden', position: 'relative' }}>
-                          <svg
-                            className="btn-svg"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z" />
-                          </svg>
-                          <div className="txt-wrapper" style={{ overflow: 'hidden', width: '7.5em', flexShrink: 0 }}>
-                            <span className="txt-1">
-                              {Array.from("Know More").map((char, charIndex) => (
-                                <span key={charIndex} className="btn-letter">
-                                  {char === " " ? "\u00A0" : char}
-                                </span>
-                              ))}
-                            </span>
-                          </div>
-                        </button>
-                      </div>
                     </div>
                   </div>
                 )}

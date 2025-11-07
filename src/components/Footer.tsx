@@ -14,7 +14,6 @@ type FooterProps = {
 
 export default function Footer({ onGetQuoteClick }: FooterProps) {
     const footerRef = useRef<HTMLElement>(null);
-    const [hasScrolled, setHasScrolled] = useState(false);
     const codeOrbitRef = useRef<HTMLDivElement>(null);
     const animationRef = useRef<gsap.core.Timeline | null>(null);
     const [fontSize, setFontSize] = useState('clamp(8rem, 20vw, 30rem)');
@@ -22,103 +21,72 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
 
     // Handle responsive font size for screens below 1080px
     useEffect(() => {
+      let rafId: number | null = null;
+      
       const updateFontSize = () => {
-        if (window.innerWidth < 1080) {
-          // Use a small percentage of viewport width for screens below 1080px
-          // Calculate based on screen width to ensure it fits properly
-          const width = window.innerWidth;
-          if (width <= 400) {
-            // Very small mobile screens (400px and less)
-            setFontSize('clamp(5.5rem, 16vw, 9rem)');
-            setLogoSize('w-11 h-11');
-          } else if (width < 480) {
-            // Very small mobile screens
-            setFontSize('clamp(6rem, 18vw, 10rem)');
-            setLogoSize('w-12 h-12');
-          } else if (width < 768) {
-            // Small tablets and large phones
-            setFontSize('clamp(7rem, 22vw, 14rem)');
-            setLogoSize('w-16 h-16');
-          } else {
-            // Medium tablets and small laptops
-            setFontSize('clamp(8rem, 25vw, 18rem)');
-            setLogoSize('w-20 h-20');
-          }
-        } else {
-          setFontSize('clamp(8rem, 20vw, 30rem)');
-          setLogoSize('sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48');
+        // Use requestAnimationFrame to batch DOM reads and avoid forced reflow
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
         }
+        
+        rafId = requestAnimationFrame(() => {
+          const width = window.innerWidth;
+          
+          if (width < 1080) {
+            // Use a small percentage of viewport width for screens below 1080px
+            // Calculate based on screen width to ensure it fits properly
+            if (width <= 400) {
+              // Very small mobile screens (400px and less)
+              setFontSize('clamp(5.5rem, 16vw, 9rem)');
+              setLogoSize('w-11 h-11');
+            } else if (width < 480) {
+              // Very small mobile screens
+              setFontSize('clamp(6rem, 18vw, 10rem)');
+              setLogoSize('w-12 h-12');
+            } else if (width < 768) {
+              // Small tablets and large phones
+              setFontSize('clamp(7rem, 22vw, 14rem)');
+              setLogoSize('w-16 h-16');
+            } else {
+              // Medium tablets and small laptops
+              setFontSize('clamp(8rem, 25vw, 18rem)');
+              setLogoSize('w-20 h-20');
+            }
+          } else {
+            setFontSize('clamp(8rem, 20vw, 30rem)');
+            setLogoSize('sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48');
+          }
+          
+          rafId = null;
+        });
       };
 
       updateFontSize();
-      window.addEventListener('resize', updateFontSize);
+      
+      // Use ResizeObserver for better performance than window resize
+      const resizeObserver = new ResizeObserver(() => {
+        updateFontSize();
+      });
+      
+      resizeObserver.observe(document.documentElement);
 
       return () => {
-        window.removeEventListener('resize', updateFontSize);
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+        }
+        resizeObserver.disconnect();
       };
     }, []);
 
-    useEffect(() => {
-      const footer = footerRef.current;
-      if (!footer) return;
-
-      let lastScrollY = window.scrollY;
-      let isScrolling = false;
-
-      const handleScroll = () => {
-        if (isScrolling) return;
-
-        const currentScrollY = window.scrollY;
-        const footerTop = footer.offsetTop;
-        const windowHeight = window.innerHeight;
-        const scrollPosition = currentScrollY + windowHeight;
-
-        // Reset hasScrolled if scrolling back up past footer
-        if (currentScrollY < lastScrollY && currentScrollY + windowHeight < footerTop - 400) {
-          setHasScrolled(false);
-        }
-
-        // Check if we're scrolling down and near the footer (within 300px)
-        if (
-          currentScrollY > lastScrollY &&
-          scrollPosition >= footerTop - 300 &&
-          !hasScrolled &&
-          !isScrolling
-        ) {
-          isScrolling = true;
-          setHasScrolled(true);
-
-          // Smoothly scroll to the bottom of the footer
-          const footerBottom = footer.offsetTop + footer.offsetHeight;
-          const targetScroll = footerBottom - windowHeight;
-
-          window.scrollTo({
-            top: targetScroll,
-            behavior: 'smooth'
-          });
-
-          // Reset isScrolling after animation completes (approximately 1 second)
-          setTimeout(() => {
-            isScrolling = false;
-          }, 1000);
-        }
-
-        lastScrollY = currentScrollY;
-      };
-
-      window.addEventListener('scroll', handleScroll, { passive: true });
-
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, [hasScrolled]);
 
     // Animation for Code Orbit letters - exactly like anime.js example
     useEffect(() => {
-      if (!codeOrbitRef.current) return;
+      // Capture ref value at the start to avoid stale closure warning
+      const codeOrbitElement = codeOrbitRef.current;
+      if (!codeOrbitElement) return;
 
       // Wrap every letter in a span with its own wrapper for individual animation
-      const textWrappers = codeOrbitRef.current.querySelectorAll('.letters');
+      const textWrappers = codeOrbitElement.querySelectorAll('.letters');
       textWrappers.forEach((wrapper) => {
         const text = wrapper.textContent || '';
         // Wrap each character in both a letter-wrapper and letter span
@@ -128,8 +96,8 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
         }).join('');
       });
 
-      const letterWrappers = codeOrbitRef.current.querySelectorAll('.letter-wrapper');
-      const letters = codeOrbitRef.current.querySelectorAll('.letter');
+      const letterWrappers = codeOrbitElement.querySelectorAll('.letter-wrapper');
+      const letters = codeOrbitElement.querySelectorAll('.letter');
       
       // Separate "Code" and "Orbit" letters
       const codeLetters: Element[] = [];
@@ -157,8 +125,12 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
       
       // Calculate the starting position for each letter
       // Each letter needs to start to the left of the entire word
+      // Batch DOM reads first, then writes to avoid forced reflow
+      const letterPositions: Array<{ element: HTMLElement; x: number }> = [];
+      
+      // First, batch all DOM reads
       letterWrappers.forEach((wrapper, index) => {
-        // Get the cumulative width of all previous wrappers
+        // Get the cumulative width of all previous wrappers (batch reads)
         let leftOffset = 0;
         for (let i = 0; i < index; i++) {
           const prevWrapper = letterWrappers[i] as HTMLElement;
@@ -166,8 +138,17 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
         }
         // Each letter starts far to the left (negative position relative to word start)
         const startX = -leftOffset - 100;
-        gsap.set(wrapper.querySelector('.letter') as HTMLElement, { 
-          x: startX,
+        const letterElement = wrapper.querySelector('.letter') as HTMLElement;
+        if (letterElement) {
+          letterPositions.push({ element: letterElement, x: startX });
+        }
+      });
+      
+      // Set initial positions immediately (needed before timeline creation)
+      // But use gsap.set which batches internally, so this is still optimized
+      letterPositions.forEach(({ element, x }) => {
+        gsap.set(element, { 
+          x: x,
           position: 'relative'
         });
       });
@@ -218,7 +199,7 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
             
             // Wait 50ms then trigger animation
             timeoutId = setTimeout(() => {
-              if (codeOrbitRef.current && tl) {
+              if (codeOrbitElement && tl) {
                 console.log('Triggering animation for small screen');
                 // Play the animation
                 tl.play();
@@ -240,13 +221,75 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
         };
       } else {
         // For larger screens, use ScrollTrigger as before
-        ScrollTrigger.create({
-          trigger: codeOrbitRef.current,
-          start: 'top 90%',
-          end: 'top 20%',
-          scrub: 1.2,
-          animation: tl
+        let scrollTriggerInstance: ScrollTrigger | null = null;
+        let initAttempted = false;
+        
+        // Wait for element to be properly positioned before creating ScrollTrigger
+        const initScrollTrigger = () => {
+          if (!codeOrbitElement || initAttempted) return;
+          
+          // Ensure element is in DOM and has dimensions
+          const rect = codeOrbitElement.getBoundingClientRect();
+          if (rect.width === 0 && rect.height === 0) {
+            // Element not ready yet, try again
+            setTimeout(initScrollTrigger, 50);
+            return;
+          }
+          
+          // Prevent multiple initializations
+          if (scrollTriggerInstance) return;
+          
+          initAttempted = true;
+          
+          scrollTriggerInstance = ScrollTrigger.create({
+            trigger: codeOrbitElement,
+            start: 'top 90%',
+            end: 'top 20%',
+            scrub: 1.2,
+            animation: tl,
+            invalidateOnRefresh: true
+          });
+          
+          // Refresh ScrollTrigger to ensure it calculates positions correctly
+          ScrollTrigger.refresh();
+        };
+        
+        // Initialize ScrollTrigger after DOM is ready
+        requestAnimationFrame(() => {
+          initScrollTrigger();
         });
+        
+        // Also try after a delay in case RAF wasn't enough
+        setTimeout(() => {
+          if (codeOrbitElement && !scrollTriggerInstance) {
+            initScrollTrigger();
+          }
+        }, 200);
+        
+        // Refresh ScrollTrigger on window load and resize
+        const refreshScrollTrigger = () => {
+          if (scrollTriggerInstance) {
+            ScrollTrigger.refresh();
+          }
+        };
+        
+        if (document.readyState === 'complete') {
+          setTimeout(refreshScrollTrigger, 100);
+        } else {
+          window.addEventListener('load', refreshScrollTrigger, { once: true });
+        }
+        
+        window.addEventListener('resize', refreshScrollTrigger, { passive: true });
+        
+        // Store cleanup
+        scrollCleanup = () => {
+          window.removeEventListener('load', refreshScrollTrigger);
+          window.removeEventListener('resize', refreshScrollTrigger);
+          if (scrollTriggerInstance) {
+            scrollTriggerInstance.kill();
+            scrollTriggerInstance = null;
+          }
+        };
       }
 
       // Logo animation removed - logo stays visible
@@ -257,13 +300,15 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
       return () => {
         if (scrollCleanup) {
           scrollCleanup();
-        } else {
-          ScrollTrigger.getAll().forEach(trigger => {
-            if (trigger.vars?.trigger === codeOrbitRef.current) {
-              trigger.kill();
-            }
-          });
         }
+        
+        // Kill all ScrollTriggers associated with this element
+        ScrollTrigger.getAll().forEach(trigger => {
+          if (trigger.vars?.trigger === codeOrbitElement) {
+            trigger.kill();
+          }
+        });
+        
         tl.kill();
       };
     }, []);
@@ -301,41 +346,9 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
         ref={footerRef}
         className="bg-[#e8e6e2] text-gray-900 relative"
       >
-        {/* Header Section */}
-        <div className="px-4 md:px-8 lg:px-16 py-4 relative">
-
-          {/* Edge-to-edge underline - positioned right after nav */}
-          <div className="max-w-7xl mx-auto relative z-10">
-            {/* Large Brand Name */}
-            <div className="mt-4 md:mt-6 mb-0 relative">
-              <div ref={codeOrbitRef} className="font-bold text-gray-900 font-khand tracking-tight leading-none relative pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0, fontSize }}>
-                <div className="ml10 ml-2 md:ml-4 lg:ml-6 xl:ml-8 pt-2 md:pt-4 lg:pt-6">
-                  <span className="text-wrapper">
-                    <span className="letters">Code </span>
-                  </span>
-                </div>
-                <div className="flex justify-end -mt-12 sm:-mt-16 md:-mt-24 lg:-mt-32 xl:-mt-36 mr-2 md:mr-4 lg:mr-6 xl:mr-8 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0 }}>
-                  <div className="ml10 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0 }}>
-                    <span className="text-wrapper" style={{ marginBottom: 0, paddingBottom: 0 }}>
-                      <span className="letters">Orbit</span>
-                    </span>
-                  </div>
-                </div>
-                <img 
-                  src="/images/logo/logo1.png" 
-                  alt="Code Orbit Logo" 
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${logoSize} object-contain`}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer Bottom Section */}
-        <div className="max-w-7xl mx-auto">
-            <div className="absolute left-0 right-0 border-b border-gray-500" style={{ top: 'calc(100% - 3rem)' }}></div>
-
-            <nav className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 lg:gap-8 text-xs md:text-sm pb-2">
+        {/* Navigation Section - At the top */}
+        <div className="relative px-2 md:px-4 lg:px-8 pt-4 pb-4">
+          <nav className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 lg:gap-8 text-xs md:text-sm px-4 md:px-6 lg:px-8">
               {/* Left Navigation Links - Mobile with percentage spacing */}
               <div className="flex md:hidden items-center justify-between w-full pr-4">
                 <a 
@@ -353,20 +366,6 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   Home
                 </a>
                 <a 
-                  href="#services" 
-                  className="text-gray-900 hover:text-gray-700 transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const target = document.getElementById('services');
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                  style={{ width: '20%', textAlign: 'center' }}
-                >
-                  Services
-                </a>
-                <a 
                   href="#about" 
                   className="text-gray-900 hover:text-gray-700 transition-colors"
                   onClick={(e) => {
@@ -379,6 +378,20 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   style={{ width: '18%', textAlign: 'center' }}
                 >
                   About
+                </a>
+                <a 
+                  href="#services" 
+                  className="text-gray-900 hover:text-gray-700 transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const target = document.getElementById('services');
+                    if (target) {
+                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  style={{ width: '20%', textAlign: 'center' }}
+                >
+                  Services
                 </a>
                 <a 
                   href="#contact" 
@@ -412,19 +425,6 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   Home
                 </a>
                 <a 
-                  href="#services" 
-                  className="text-gray-900 hover:text-gray-700 transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const target = document.getElementById('services');
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                >
-                  Services
-                </a>
-                <a 
                   href="#about" 
                   className="text-gray-900 hover:text-gray-700 transition-colors"
                   onClick={(e) => {
@@ -436,6 +436,19 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   }}
                 >
                   About
+                </a>
+                <a 
+                  href="#services" 
+                  className="text-gray-900 hover:text-gray-700 transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const target = document.getElementById('services');
+                    if (target) {
+                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                >
+                  Services
                 </a>
                 <a 
                   href="#contact" 
@@ -464,9 +477,42 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
                   © Copyright Code Orbit {new Date().getFullYear()}
                 </span>
               </div>
-            </nav>
+          </nav>
+
+          {/* Border line right after navigation - full width */}
+          <div className="absolute left-0 right-0 border-b border-gray-500 mt-4"></div>
+        </div>
+
+        {/* Header Section */}
+        <div className="px-4 md:px-8 lg:px-16 py-4 relative">
+          {/* Edge-to-edge underline - positioned right after nav */}
+          <div className="max-w-7xl mx-auto relative z-10">
+            {/* Large Brand Name */}
+            <div className="mt-4 md:mt-6 mb-0 relative">
+              <div ref={codeOrbitRef} className="font-bold text-gray-900 font-khand tracking-tight leading-none relative pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0, fontSize }}>
+                <div className="ml10 ml-2 md:ml-4 lg:ml-6 xl:ml-8 pt-2 md:pt-4 lg:pt-6">
+                  <span className="text-wrapper">
+                    <span className="letters">Code </span>
+                  </span>
+                </div>
+                <div className="flex justify-end -mt-12 sm:-mt-16 md:-mt-24 lg:-mt-32 xl:-mt-36 mr-2 md:mr-4 lg:mr-6 xl:mr-8 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0 }}>
+                  <div className="ml10 mb-0 pb-0" style={{ marginBottom: 0, paddingBottom: 0, lineHeight: 0 }}>
+                    <span className="text-wrapper" style={{ marginBottom: 0, paddingBottom: 0 }}>
+                      <span className="letters">Orbit</span>
+                    </span>
+                  </div>
+                </div>
+                <img 
+                  src="/images/logo/logo1.png" 
+                  alt="Code Orbit Logo" 
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${logoSize} object-contain`}
+                />
+              </div>
+            </div>
           </div>
-        </footer>
-      );
-    }
+        </div>
+
+      </footer>
+    );
+  }
 

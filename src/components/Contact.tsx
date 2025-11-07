@@ -92,7 +92,7 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4"
       style={{ 
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         opacity: isAnimating ? 1 : 0,
@@ -102,7 +102,7 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
     >
       <section 
         id="contact" 
-        className="relative w-full max-w-6xl bg-black border border-gray-700"
+        className="relative w-full max-w-6xl bg-black border border-gray-700 max-h-[95vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
         style={{ 
           fontFamily: 'Khand, sans-serif',
@@ -114,20 +114,20 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-white hover:text-gray-400 transition-colors z-10"
+          className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white hover:text-gray-400 transition-colors z-10"
           style={{ fontSize: '1.5rem' }}
         >
           ×
         </button>
 
-        <div className="px-8 md:px-12 lg:px-16 py-12">
-          <div className="mb-8 max-w-7xl">
-            <h2 className="font-bold text-white mb-2" style={{ fontSize: 'clamp(1.5rem, 2.618vw, 3rem)' }}>Get a Quote</h2>
-            <p className="text-gray-400" style={{ fontSize: 'clamp(0.618rem, 1.618vw, 0.875rem)' }}>Tell us about your project and we'll get back to you</p>
+        <div className="px-4 sm:px-6 md:px-12 lg:px-16 py-6 sm:py-8 md:py-12">
+          <div className="mb-6 sm:mb-8 max-w-7xl">
+            <h2 className="font-bold text-white mb-1 sm:mb-2" style={{ fontSize: 'clamp(1.5rem, 2.618vw, 3rem)' }}>Get a Quote</h2>
+            <p className="text-gray-400 text-sm sm:text-base" style={{ fontSize: 'clamp(0.618rem, 1.618vw, 0.875rem)' }}>Tell us about your project and we&apos;ll get back to you</p>
           </div>
         
-        <form onSubmit={handleSubmit} className="space-y-5 max-w-7xl">
-          <div className="grid md:grid-cols-2 gap-5">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 max-w-7xl">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <input
                 type="text"
@@ -155,7 +155,7 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <input
                 type="text"
@@ -181,7 +181,7 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <select
                 id="projectType"
@@ -192,9 +192,9 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
                 style={{ color: formData.projectType ? '#fff' : '#9ca3af' }}
               >
                 <option value="" className="bg-black text-gray-400">Project Type</option>
-                <option value="web" className="bg-black">Web Development</option>
-                <option value="mobile" className="bg-black">Mobile Application</option>
-                <option value="cloud" className="bg-black">Cloud Solutions</option>
+                <option value="web-solutions" className="bg-black">Web Solutions</option>
+                <option value="ai-solutions" className="bg-black">Tailored AI Solutions</option>
+                <option value="whatsapp-bot" className="bg-black">WhatsApp Bot</option>
                 <option value="consulting" className="bg-black">Digital Consulting</option>
                 <option value="other" className="bg-black">Other</option>
               </select>
@@ -251,7 +251,7 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
 
           {submitStatus === "success" && (
             <div className="pt-2 text-green-400 text-sm">
-              ✓ Thank you for your quote request! We'll get back to you soon.
+              ✓ Thank you for your quote request! We&apos;ll get back to you soon.
             </div>
           )}
           {submitStatus === "error" && (
