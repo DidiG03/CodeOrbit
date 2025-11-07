@@ -123,7 +123,7 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
         <div className="px-4 sm:px-6 md:px-12 lg:px-16 py-6 sm:py-8 md:py-12">
           <div className="mb-6 sm:mb-8 max-w-7xl">
             <h2 className="font-bold text-white mb-1 sm:mb-2" style={{ fontSize: 'clamp(1.5rem, 2.618vw, 3rem)' }}>Get a Quote</h2>
-            <p className="text-gray-400 text-sm sm:text-base" style={{ fontSize: 'clamp(0.618rem, 1.618vw, 0.875rem)' }}>Tell us about your project and we'll get back to you</p>
+            <p className="text-gray-400 text-sm sm:text-base" style={{ fontSize: 'clamp(0.618rem, 1.618vw, 0.875rem)' }}>Tell us about your project and we&apos;ll get back to you</p>
           </div>
         
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 max-w-7xl">
@@ -251,7 +251,7 @@ export default function Contact({ isOpen, onClose }: ContactProps) {
 
           {submitStatus === "success" && (
             <div className="pt-2 text-green-400 text-sm">
-              ✓ Thank you for your quote request! We'll get back to you soon.
+              ✓ Thank you for your quote request! We&apos;ll get back to you soon.
             </div>
           )}
           {submitStatus === "error" && (

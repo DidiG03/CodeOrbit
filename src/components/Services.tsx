@@ -46,10 +46,10 @@ export default function Services() {
 
   useEffect(() => {
     // Calculate total height needed for 5 sections (Our Services + 4 service slides)
-    // Our Services slide is 150vh, others are 100vh each
+    // Our Services slide is 150vh, first 3 slides are 100vh each, last slide (Digital Consulting) is 250vh
     // Use requestAnimationFrame to batch DOM operations and avoid forced reflow
     const updateHeight = () => {
-      const totalHeight = window.innerHeight * 5.5; // 1.5vh (Our Services) + 4vh (4 service slides)
+      const totalHeight = window.innerHeight * 7; // 1.5vh (Our Services) + 3vh (3 service slides) + 2.5vh (Digital Consulting - longer) = 7vh total
       if (containerRef.current) {
         // Batch DOM write in RAF to avoid forced reflow
         requestAnimationFrame(() => {
@@ -263,12 +263,19 @@ export default function Services() {
           const isFirst = index === 0;
           const isLast = index === services.length - 1;
           
+          // Calculate top position: each slide is 100vh apart, starting after "Our Services" (150vh)
+          const topPosition = 150 + (index * 100);
+          
+          // Last slide (Digital Consulting) is 250vh tall, others are 100vh
+          const slideHeight = isLast ? '250vh' : '100vh';
+          
           return (
             <div
               key={`service-slide-${index}`}
               className="section-parallax"
               style={{
-                top: `${150 + (index * 100)}vh`,
+                top: `${topPosition}vh`,
+                height: slideHeight,
                 backgroundColor: service.bgColor,
                 color: service.textColor || '#fff',
                 zIndex: 1000 + index + 1,

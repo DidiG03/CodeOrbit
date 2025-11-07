@@ -81,10 +81,12 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
 
     // Animation for Code Orbit letters - exactly like anime.js example
     useEffect(() => {
-      if (!codeOrbitRef.current) return;
+      // Capture ref value at the start to avoid stale closure warning
+      const codeOrbitElement = codeOrbitRef.current;
+      if (!codeOrbitElement) return;
 
       // Wrap every letter in a span with its own wrapper for individual animation
-      const textWrappers = codeOrbitRef.current.querySelectorAll('.letters');
+      const textWrappers = codeOrbitElement.querySelectorAll('.letters');
       textWrappers.forEach((wrapper) => {
         const text = wrapper.textContent || '';
         // Wrap each character in both a letter-wrapper and letter span
@@ -94,8 +96,8 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
         }).join('');
       });
 
-      const letterWrappers = codeOrbitRef.current.querySelectorAll('.letter-wrapper');
-      const letters = codeOrbitRef.current.querySelectorAll('.letter');
+      const letterWrappers = codeOrbitElement.querySelectorAll('.letter-wrapper');
+      const letters = codeOrbitElement.querySelectorAll('.letter');
       
       // Separate "Code" and "Orbit" letters
       const codeLetters: Element[] = [];
@@ -126,6 +128,7 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
       // Batch DOM reads first, then writes to avoid forced reflow
       const letterPositions: Array<{ element: HTMLElement; x: number }> = [];
       
+      // First, batch all DOM reads
       letterWrappers.forEach((wrapper, index) => {
         // Get the cumulative width of all previous wrappers (batch reads)
         let leftOffset = 0;
@@ -141,13 +144,12 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
         }
       });
       
-      // Batch all DOM writes in a single RAF to avoid forced reflow
-      requestAnimationFrame(() => {
-        letterPositions.forEach(({ element, x }) => {
-          gsap.set(element, { 
-            x: x,
-            position: 'relative'
-          });
+      // Set initial positions immediately (needed before timeline creation)
+      // But use gsap.set which batches internally, so this is still optimized
+      letterPositions.forEach(({ element, x }) => {
+        gsap.set(element, { 
+          x: x,
+          position: 'relative'
         });
       });
       
@@ -197,7 +199,7 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
             
             // Wait 50ms then trigger animation
             timeoutId = setTimeout(() => {
-              if (codeOrbitRef.current && tl) {
+              if (codeOrbitElement && tl) {
                 console.log('Triggering animation for small screen');
                 // Play the animation
                 tl.play();
@@ -219,13 +221,75 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
         };
       } else {
         // For larger screens, use ScrollTrigger as before
-        ScrollTrigger.create({
-          trigger: codeOrbitRef.current,
-          start: 'top 90%',
-          end: 'top 20%',
-          scrub: 1.2,
-          animation: tl
+        let scrollTriggerInstance: ScrollTrigger | null = null;
+        let initAttempted = false;
+        
+        // Wait for element to be properly positioned before creating ScrollTrigger
+        const initScrollTrigger = () => {
+          if (!codeOrbitElement || initAttempted) return;
+          
+          // Ensure element is in DOM and has dimensions
+          const rect = codeOrbitElement.getBoundingClientRect();
+          if (rect.width === 0 && rect.height === 0) {
+            // Element not ready yet, try again
+            setTimeout(initScrollTrigger, 50);
+            return;
+          }
+          
+          // Prevent multiple initializations
+          if (scrollTriggerInstance) return;
+          
+          initAttempted = true;
+          
+          scrollTriggerInstance = ScrollTrigger.create({
+            trigger: codeOrbitElement,
+            start: 'top 90%',
+            end: 'top 20%',
+            scrub: 1.2,
+            animation: tl,
+            invalidateOnRefresh: true
+          });
+          
+          // Refresh ScrollTrigger to ensure it calculates positions correctly
+          ScrollTrigger.refresh();
+        };
+        
+        // Initialize ScrollTrigger after DOM is ready
+        requestAnimationFrame(() => {
+          initScrollTrigger();
         });
+        
+        // Also try after a delay in case RAF wasn't enough
+        setTimeout(() => {
+          if (codeOrbitElement && !scrollTriggerInstance) {
+            initScrollTrigger();
+          }
+        }, 200);
+        
+        // Refresh ScrollTrigger on window load and resize
+        const refreshScrollTrigger = () => {
+          if (scrollTriggerInstance) {
+            ScrollTrigger.refresh();
+          }
+        };
+        
+        if (document.readyState === 'complete') {
+          setTimeout(refreshScrollTrigger, 100);
+        } else {
+          window.addEventListener('load', refreshScrollTrigger, { once: true });
+        }
+        
+        window.addEventListener('resize', refreshScrollTrigger, { passive: true });
+        
+        // Store cleanup
+        scrollCleanup = () => {
+          window.removeEventListener('load', refreshScrollTrigger);
+          window.removeEventListener('resize', refreshScrollTrigger);
+          if (scrollTriggerInstance) {
+            scrollTriggerInstance.kill();
+            scrollTriggerInstance = null;
+          }
+        };
       }
 
       // Logo animation removed - logo stays visible
@@ -236,13 +300,15 @@ export default function Footer({ onGetQuoteClick }: FooterProps) {
       return () => {
         if (scrollCleanup) {
           scrollCleanup();
-        } else {
-          ScrollTrigger.getAll().forEach(trigger => {
-            if (trigger.vars?.trigger === codeOrbitRef.current) {
-              trigger.kill();
-            }
-          });
         }
+        
+        // Kill all ScrollTriggers associated with this element
+        ScrollTrigger.getAll().forEach(trigger => {
+          if (trigger.vars?.trigger === codeOrbitElement) {
+            trigger.kill();
+          }
+        });
+        
         tl.kill();
       };
     }, []);
