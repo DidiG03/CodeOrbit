@@ -77,6 +77,89 @@ export default function Services() {
 
   return (
     <>
+      <style jsx>{`
+        @keyframes knowMoreTextShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        @keyframes knowMoreGlow {
+          0%,
+          100% {
+            transform: translate3d(-10%, -10%, 0) scale(1);
+            opacity: 0.5;
+          }
+          50% {
+            transform: translate3d(10%, 10%, 0) scale(1.1);
+            opacity: 0.75;
+          }
+        }
+
+        @keyframes knowMoreShadowPulse {
+          0%,
+          100% {
+            box-shadow: 0 0 0px 0 rgba(139, 92, 246, 0.4), 0 0 25px 8px rgba(59, 130, 246, 0.25);
+          }
+          50% {
+            box-shadow: 0 0 18px 4px rgba(139, 92, 246, 0.5), 0 0 35px 14px rgba(59, 130, 246, 0.35);
+          }
+        }
+
+        .know-more-button {
+          position: relative;
+          overflow: hidden;
+          background: rgba(59, 130, 246, 0.12);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
+
+        .know-more-button::before {
+          content: '';
+          position: absolute;
+          inset: -50%;
+          background: linear-gradient(
+            135deg,
+            rgba(59, 130, 246, 0.45),
+            rgba(139, 92, 246, 0.35),
+            rgba(236, 72, 153, 0.4)
+          );
+          opacity: 0.55;
+          animation: knowMoreGlow 6s ease-in-out infinite;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .know-more-button::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          animation: knowMoreShadowPulse 2.8s ease-in-out infinite;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .know-more-button:hover::before {
+          opacity: 0.75;
+        }
+
+        .know-more-text {
+          background: linear-gradient(90deg, #bfdbfe, #c4b5fd, #f9a8d4, #c4b5fd, #bfdbfe);
+          background-size: 200% 200%;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: knowMoreTextShift 4s ease-in-out infinite;
+        }
+      `}</style>
       {/* Parallax Sections Container */}
       <div ref={containerRef} id="services" className="services-parallax-container relative">
         {/* Our Services Title Slide */}
@@ -353,6 +436,19 @@ export default function Services() {
                       <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-90">
                         {service.description}
                       </p>
+                      <a
+                        href="https://agent.codeorbit.tech"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="know-more-button group inline-flex items-center gap-3 mt-8 px-8 py-3 rounded-full text-white font-semibold tracking-wide transition-transform duration-300 ease-out hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8b5cf6]"
+                      >
+                        <span className="know-more-text relative z-10 uppercase text-sm md:text-base tracking-[0.35em]">
+                          Know More
+                        </span>
+                        <span className="relative z-10 text-xl transition-transform duration-300 ease-out group-hover:translate-x-2">
+                          →
+                        </span>
+                      </a>
                     </div>
                     {service.images && service.images.length > 0 && (
                       <div className="lg:col-span-5 order-1 lg:order-2" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
