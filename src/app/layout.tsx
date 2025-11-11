@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden">
       <head>
-        {/* Preload critical fonts for better FCP */}
+        {/* Preload critical fonts for better FCP - ensures fonts always load */}
         <link
           rel="preload"
           href="/fonts/Khand/Fonts/WEB/fonts/Khand-Regular.woff2"
@@ -34,7 +34,28 @@ export default function RootLayout({
         />
         <link
           rel="preload"
+          href="/fonts/Khand/Fonts/WEB/fonts/Khand-Medium.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Khand/Fonts/WEB/fonts/Khand-SemiBold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
           href="/fonts/Array/Fonts/WEB/fonts/Array-Regular.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Array/Fonts/WEB/fonts/Array-Semibold.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
