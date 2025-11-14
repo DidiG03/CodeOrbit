@@ -24,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden">
       <head>
+        <meta name="facebook-domain-verification" content="used45ddfe0pbafdtmjnc7u3oyvy8w" />
         {/* Preload critical fonts for better FCP */}
         <link
           rel="preload"
